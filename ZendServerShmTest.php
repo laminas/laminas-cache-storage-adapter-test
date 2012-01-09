@@ -20,7 +20,9 @@
  */
 
 namespace ZendTest\Cache\Storage\Adapter;
-use Zend\Cache;
+
+use Zend\Cache,
+    Zend\Cache\Exception;
 
 /**
  * @category   Zend
@@ -30,25 +32,31 @@ use Zend\Cache;
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @group      Zend_Cache
  */
-class MemoryTest extends CommonAdapterTest
+class ZendServerShmTest extends CommonAdapterTest
 {
 
     public function setUp()
     {
-        // instantiate memory adapter
-        $this->_options = new Cache\Storage\Adapter\MemoryOptions();
-        $this->_storage = new Cache\Storage\Adapter\Memory();
-        $this->_storage->setOptions($this->_options);
+        if (!function_exists('zend_shm_cache_store')) {
+            try {
+                new Cache\Storage\Adapter\ZendServerShm();
+                $this->fail("Missing expected ExtensionNotLoadedException");
+            } catch (Exception\ExtensionNotLoadedException $e) {
+                $this->markTestSkipped($e->getMessage());
+            }
+        }
 
+        $this->_storage = new Cache\Storage\Adapter\ZendServerShm();
         parent::setUp();
     }
 
-    public function testThrowOutOfCapacityException()
+    public function tearDown()
     {
-        $this->_options->setMemoryLimit(memory_get_usage(true) - 8);
+        if (function_exists('zend_shm_cache_clear')) {
+            zend_shm_cache_clear();
+        }
 
-        $this->setExpectedException('Zend\Cache\Exception\OutOfCapacityException');
-        $this->_storage->addItem('test', 'test');
+        parent::tearDown();
     }
 
 }
