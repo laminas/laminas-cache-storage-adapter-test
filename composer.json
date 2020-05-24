@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "LaminasTest\\Cache\\Adapter\\": "src/"
+            "LaminasTest\\Cache\\Storage\\Adapter": "src/"
         }
     },
     "scripts": {
