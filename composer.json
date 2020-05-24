@@ -1,0 +1,49 @@
+{
+    "name": "laminas/laminas-cache-adapter-test",
+    "description": "Laminas cache adapter test",
+    "keywords": [
+        "laminas",
+        "cache",
+        "test"
+    ],
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+    },
+    "conflict": {
+        "laminas/laminas-cache": "<2.10"
+    },
+    "provide": {
+        "laminas/laminas-cache-implementation": "1.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "LaminasTest\\Cache\\Adapter\\": "src/"
+        }
+    },
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "support": {
+        "issues": "https://github.com/laminas/laminas-cache-adapter-test/issues",
+        "forum": "https://discourse.laminas.dev/",
+        "source": "https://github.com/laminas/laminas-cache-adapter-test",
+        "docs": "https://docs.laminas.dev/laminas-cache-adapter-test/",
+        "rss": "https://github.com/laminas/laminas-cache-adapter-test/releases.atom"
+    }
+}
