@@ -1,5 +1,5 @@
 {
-    "name": "laminas/laminas-cache-adapter-test",
+    "name": "laminas/laminas-cache-storage-adapter-test",
     "description": "Laminas cache adapter test",
     "keywords": [
         "laminas",
