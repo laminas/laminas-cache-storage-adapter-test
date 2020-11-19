@@ -1,47 +1,49 @@
 {
-    "name": "laminas/laminas-cache-storage-adapter-test",
-    "description": "Laminas cache storage adapter shared test dependency",
-    "keywords": [
-        "laminas",
-        "cache",
-        "test"
-    ],
-    "license": "BSD-3-Clause",
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "cache/integration-tests": "^0.16",
-        "laminas/laminas-cache": "^2.10",
-        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+  "name": "laminas/laminas-cache-storage-adapter-test",
+  "description": "Laminas cache storage adapter shared test dependency",
+  "keywords": [
+    "laminas",
+    "cache",
+    "test"
+  ],
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": "^5.6 || ^7.0",
+    "cache/integration-tests": "^0.16",
+    "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+  },
+  "conflict": {
+    "laminas/laminas-cache": "<2.10"
+  },
+  "require-dev": {
+    "laminas/laminas-cache": "^2.10",
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {},
+  "autoload": {
+    "psr-4": {
+      "LaminasTest\\Cache\\Storage\\Adapter\\": "src/"
     },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "^3.5"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-    },
-    "autoload": {
-        "psr-4": {
-            "LaminasTest\\Cache\\Storage\\Adapter\\": "src/"
-        },
-        "files": [
-            "test/autoload.php"
-        ]
-    },
-    "scripts": {
-        "cs-check": "phpcs",
-        "cs-fix": "phpcbf",
-        "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
-    },
-    "prefer-stable": true,
-    "minimum-stability": "dev",
-    "support": {
-        "issues": "https://github.com/laminas/laminas-cache-storage-adapter-test/issues",
-        "forum": "https://discourse.laminas.dev/",
-        "source": "https://github.com/laminas/laminas-cache-storage-adapter-test",
-        "docs": "https://docs.laminas.dev/laminas-cache-storage-adapter-test/",
-        "rss": "https://github.com/laminas/laminas-cache-storage-adapter-test/releases.atom"
-    }
+    "files": [
+      "test/autoload.php"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs",
+    "cs-fix": "phpcbf",
+    "test": "phpunit --colors=always",
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+  },
+  "support": {
+    "issues": "https://github.com/laminas/laminas-cache-storage-adapter-test/issues",
+    "forum": "https://discourse.laminas.dev/",
+    "source": "https://github.com/laminas/laminas-cache-storage-adapter-test",
+    "docs": "https://docs.laminas.dev/laminas-cache-storage-adapter-test/",
+    "rss": "https://github.com/laminas/laminas-cache-storage-adapter-test/releases.atom"
+  }
 }
