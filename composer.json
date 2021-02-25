@@ -28,7 +28,7 @@
       "LaminasTest\\Cache\\Storage\\Adapter\\": "src/"
     },
     "files": [
-      "test/autoload.php"
+      "autoload/phpunit-backward-compatibility.php"
     ]
   },
   "minimum-stability": "dev",
