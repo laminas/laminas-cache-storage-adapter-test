@@ -120,7 +120,7 @@ class AdapterOptionsTest extends TestCase
 
         // setup event listener
         $calledArgs = null;
-        $adapter->getEventManager()->attach('option', function () use (& $calledArgs) {
+        $adapter->getEventManager()->attach('option', function () use (&$calledArgs) {
             $calledArgs = func_get_args();
         });
 
