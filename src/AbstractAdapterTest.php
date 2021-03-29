@@ -281,7 +281,7 @@ class AbstractAdapterTest extends TestCase
                     $this->stringContains('key'),
                     $this->anything()
                 )
-                ->will($this->returnCallback(function ($k, & $success) use ($items) {
+                ->will($this->returnCallback(function ($k, &$success) use ($items) {
                     if ($items[$k]) {
                         $success = true;
                         return $items[$k];
@@ -374,7 +374,7 @@ class AbstractAdapterTest extends TestCase
 
     public function simpleEventHandlingMethodDefinitions()
     {
-        $capabilities = new Capabilities($this->getMockForAbstractAdapter(), new \stdClass);
+        $capabilities = new Capabilities($this->getMockForAbstractAdapter(), new \stdClass());
 
         return [
             //    name, internalName, args, returnValue

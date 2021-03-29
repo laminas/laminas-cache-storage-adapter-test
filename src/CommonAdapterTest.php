@@ -90,7 +90,7 @@ abstract class CommonAdapterTest extends TestCase
      */
     public function testAdapterPluginManagerWithCommonNames($commonAdapterName)
     {
-        $pluginManager = new AdapterPluginManager(new ServiceManager);
+        $pluginManager = new AdapterPluginManager(new ServiceManager());
         $this->assertTrue(
             $pluginManager->has($commonAdapterName),
             "Storage adapter name '{$commonAdapterName}' not found in storage adapter plugin manager"
