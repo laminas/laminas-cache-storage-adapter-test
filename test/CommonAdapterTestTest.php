@@ -23,4 +23,12 @@ final class CommonAdapterTestTest extends CommonAdapterTest
 
         parent::setUp();
     }
+
+    /**
+     * @return array
+     */
+    public function getCommonAdapterNamesProvider()
+    {
+        return [];
+    }
 }
