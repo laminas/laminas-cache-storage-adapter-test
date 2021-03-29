@@ -80,6 +80,23 @@ abstract class CommonAdapterTest extends TestCase
         }
     }
 
+    /**
+     * A data provider for common storage adapter names
+     */
+    abstract public function getCommonAdapterNamesProvider();
+
+    /**
+     * @dataProvider getCommonAdapterNamesProvider
+     */
+    public function testAdapterPluginManagerWithCommonNames($commonAdapterName)
+    {
+        $pluginManager = new AdapterPluginManager(new ServiceManager);
+        $this->assertTrue(
+            $pluginManager->has($commonAdapterName),
+            "Storage adapter name '{$commonAdapterName}' not found in storage adapter plugin manager"
+        );
+    }
+
     public function testOptionNamesValid()
     {
         $options = $this->_storage->getOptions()->toArray();
