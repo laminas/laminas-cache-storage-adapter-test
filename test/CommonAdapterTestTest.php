@@ -16,7 +16,7 @@ use LaminasTest\Cache\Storage\Adapter\CommonAdapterTest;
  */
 final class CommonAdapterTestTest extends CommonAdapterTest
 {
-    public function setUp(): void
+    public function setUp()
     {
         $this->_options = new AdapterOptions();
         $this->_storage = new TestAsset\MockAdapter($this->_options);
