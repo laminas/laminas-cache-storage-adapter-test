@@ -1,7 +1,6 @@
 # laminas-cache-storage-adapter-test
 
-[![Build Status](https://travis-ci.com/laminas/laminas-cache-storage-adapter-test.svg?branch=master)](https://travis-ci.com/laminas/laminas-cache-storage-adapter-test)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-cache-storage-adapter-test/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-cache-storage-adapter-test?branch=master)
+[![Build Status](https://github.com/laminas/laminas/laminas-cache-storage-adapter-test/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-cache-storage-adapter-test/actions/workflows/continuous-integration.yml)
 
 This library provides shared testing files which are used by all cache storage adapter satellites. 
 
