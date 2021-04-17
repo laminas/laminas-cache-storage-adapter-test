@@ -9,7 +9,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
-        "cache/integration-tests": "^0.16",
+        "cache/integration-tests": "^0.17",
         "phpunit/phpunit": "^9.5"
     },
     "conflict": {
