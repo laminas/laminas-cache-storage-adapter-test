@@ -22,78 +22,12 @@
       <code>function ($event) use (&amp;$eventList) {</code>
       <code>function ($event) use (&amp;$eventList) {</code>
     </MissingClosureReturnType>
-    <MissingParamType occurrences="13">
-      <code>$internalMethodName</code>
-      <code>$internalMethodName</code>
-      <code>$internalMethodName</code>
-      <code>$method</code>
-      <code>$methodArgs</code>
-      <code>$methodArgs</code>
-      <code>$methodArgs</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$retVal</code>
-      <code>$retVal</code>
-      <code>$retVal</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="46">
-      <code>checkPreEventCanChangeArguments</code>
-      <code>simpleEventHandlingMethodDefinitions</code>
-      <code>testAddItems</code>
-      <code>testAddItemsExists</code>
-      <code>testAddItemsFail</code>
-      <code>testDecrementItems</code>
-      <code>testDecrementItemsFail</code>
-      <code>testEventHandlingCatchException</code>
-      <code>testEventHandlingSimple</code>
-      <code>testEventHandlingStopInPre</code>
-      <code>testGetDefaultNamespaceNotEmpty</code>
-      <code>testGetItemCallsInternalGetItem</code>
-      <code>testGetItemReturnsNullIfFailed</code>
-      <code>testGetItemsCallsInternalGetItems</code>
-      <code>testGetMetadatas</code>
-      <code>testGetMetadatasFail</code>
-      <code>testGetOptions</code>
-      <code>testHasItemCallsInternalHasItem</code>
-      <code>testHasItemsCallsInternalHasItems</code>
-      <code>testIncrementItems</code>
-      <code>testIncrementItemsFail</code>
-      <code>testInternalGetItemsCallsInternalGetItemForEachKey</code>
-      <code>testInternalHasItemsCallsInternalHasItem</code>
-      <code>testInternalTriggerExceptionThrowRuntimeException</code>
-      <code>testInternalTriggerPost</code>
-      <code>testInternalTriggerPre</code>
-      <code>testPluginRegistry</code>
-      <code>testPreEventsCanChangeArguments</code>
-      <code>testRemoveItems</code>
-      <code>testRemoveItemsFail</code>
-      <code>testReplaceItems</code>
-      <code>testReplaceItemsFail</code>
-      <code>testReplaceItemsMissing</code>
-      <code>testSetItems</code>
-      <code>testSetItemsFail</code>
-      <code>testSetKeyPattern</code>
-      <code>testSetKeyPatternThrowsExceptionOnInvalidPattern</code>
-      <code>testSetNamespace</code>
-      <code>testSetNamespace0</code>
-      <code>testSetReadable</code>
-      <code>testSetTtl</code>
-      <code>testSetTtlThrowsInvalidArgumentException</code>
-      <code>testSetWritable</code>
-      <code>testTouchItems</code>
-      <code>testTouchItemsFail</code>
-      <code>testUnsetKeyPattern</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="14">
+    <MixedArgument occurrences="11">
       <code>$calledEvents</code>
       <code>$calledEvents</code>
       <code>$calledEvents</code>
       <code>$calledEvents</code>
       <code>$handles</code>
-      <code>$method</code>
-      <code>$methodArgs</code>
-      <code>$methodArgs</code>
       <code>$plugin</code>
       <code>$plugin</code>
       <code>$plugin</code>
@@ -104,10 +38,6 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>array_unique($methods)</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="2">
-      <code>$methodArgs</code>
-      <code>$methodArgs</code>
-    </MixedArrayAccess>
     <MixedArrayAssignment occurrences="4">
       <code>$eventList[]</code>
       <code>$eventList[]</code>
@@ -141,6 +71,9 @@
       <code>$v</code>
       <code>$v</code>
     </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
     <MixedMethodCall occurrences="115">
       <code>getName</code>
       <code>getName</code>
@@ -258,25 +191,6 @@
       <code>with</code>
       <code>with</code>
     </MixedMethodCall>
-    <MixedOperand occurrences="17">
-      <code>$method</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-      <code>$methodName</code>
-    </MixedOperand>
     <NullArgument occurrences="1">
       <code>null</code>
     </NullArgument>
@@ -352,41 +266,7 @@
       <code>$value</code>
     </UnusedVariable>
   </file>
-  <file src="src/AdapterOptionsTest.php">
-    <MissingReturnType occurrences="12">
-      <code>testKeyPattern</code>
-      <code>testNamespace</code>
-      <code>testReadable</code>
-      <code>testSetFromArrayWithPrioritizedOptions</code>
-      <code>testSetFromArrayWithoutPrioritizedOptions</code>
-      <code>testSetKeyPatternAllowEmptyString</code>
-      <code>testSetKeyPatternThrowsInvalidArgumentExceptionOnInvalidPattern</code>
-      <code>testSetTtlAutoconvertToIntIfPossible</code>
-      <code>testSetTtlThrowsInvalidArgumentExceptionOnNegativeValue</code>
-      <code>testTriggerOptionEvent</code>
-      <code>testTtl</code>
-      <code>testWritable</code>
-    </MissingReturnType>
-    <MixedArgument occurrences="1">
-      <code>$calledArgs</code>
-    </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>$calledArgs[0]</code>
-    </MixedArrayAccess>
-    <MixedMethodCall occurrences="1">
-      <code>getArrayCopy</code>
-    </MixedMethodCall>
-    <PossiblyInvalidMethodCall occurrences="1">
-      <code>getArrayCopy</code>
-    </PossiblyInvalidMethodCall>
-  </file>
-  <file src="src/CommonAdapterTest.php">
-    <DeprecatedMethod occurrences="1">
-      <code>assertRegExp</code>
-    </DeprecatedMethod>
-    <InvalidArgument occurrences="1">
-      <code>$metadata</code>
-    </InvalidArgument>
+  <file src="src/AbstractCommonAdapterTest.php">
     <InvalidScalarArgument occurrences="9">
       <code>$capabilities-&gt;getTtlPrecision() * 1000000</code>
       <code>$capabilities-&gt;getTtlPrecision() * 1000000</code>
@@ -398,90 +278,10 @@
       <code>$wait * 2000000</code>
       <code>$wait * 2000000</code>
     </InvalidScalarArgument>
-    <MissingParamType occurrences="1">
-      <code>$commonAdapterName</code>
-    </MissingParamType>
-    <MissingReturnType occurrences="77">
+    <MissingReturnType occurrences="1">
       <code>getCommonAdapterNamesProvider</code>
-      <code>testAdapterPluginManagerWithCommonNames</code>
-      <code>testAddItemReturnsFalseIfItemAlreadyExists</code>
-      <code>testAddItemReturnsFalseIfNonWritable</code>
-      <code>testAddItemSetsTTL</code>
-      <code>testAddItemsReturnsFailedKeys</code>
-      <code>testAddNewItem</code>
-      <code>testCheckAndSetItem</code>
-      <code>testClearByNamespace</code>
-      <code>testClearByNamespaceThrowsInvalidArgumentExceptionOnEmptyNamespace</code>
-      <code>testClearByPrefix</code>
-      <code>testClearByPrefixThrowsInvalidArgumentExceptionOnEmptyPrefix</code>
-      <code>testClearExpired</code>
-      <code>testDatatypesCapability</code>
-      <code>testDecrementItem</code>
-      <code>testDecrementItemInitialValue</code>
-      <code>testDecrementItemReturnsFalseIfNonWritable</code>
-      <code>testDecrementItemsReturnsEmptyArrayIfNonWritable</code>
-      <code>testFlush</code>
-      <code>testGetAvailableSpace</code>
-      <code>testGetCapabilities</code>
-      <code>testGetItemReturnsNullIfNonReadable</code>
-      <code>testGetItemReturnsNullOnExpiredItem</code>
-      <code>testGetItemReturnsNullOnMissingItem</code>
-      <code>testGetItemSetsSuccessFlag</code>
-      <code>testGetItemsReturnsEmptyArrayIfNonReadable</code>
-      <code>testGetItemsReturnsKeyValuePairsOfFoundItems</code>
-      <code>testGetMetadata</code>
-      <code>testGetMetadataReturnsFalseIfNonReadable</code>
-      <code>testGetMetadataReturnsFalseOnMissingItem</code>
-      <code>testGetMetadatas</code>
-      <code>testGetMetadatasReturnsEmptyArrayIfNonReadable</code>
-      <code>testGetMetadatasWithEmptyNamespace</code>
-      <code>testGetTotalSpace</code>
-      <code>testGettersAndSettersOfOptionsExists</code>
-      <code>testHasItemNonReadable</code>
-      <code>testHasItemReturnsFalseOnExpiredItem</code>
-      <code>testHasItemReturnsFalseOnMissingItem</code>
-      <code>testHasItemReturnsTrueOnValidItem</code>
-      <code>testHasItemsReturnsEmptyArrayIfNonReadable</code>
-      <code>testHasItemsReturnsKeysOfFoundItems</code>
-      <code>testIncrementItem</code>
-      <code>testIncrementItemInitialValue</code>
-      <code>testIncrementItemReturnsFalseIfNonWritable</code>
-      <code>testIncrementItemsResturnsKeyValuePairsOfWrittenItems</code>
-      <code>testIncrementItemsReturnsEmptyArrayIfNonWritable</code>
-      <code>testIterator</code>
-      <code>testKeyCapabilities</code>
-      <code>testOptimize</code>
-      <code>testOptionNamesValid</code>
-      <code>testOptionsFluentInterface</code>
-      <code>testOptionsGetAndSetDefault</code>
-      <code>testRemoveItemReturnsFalseOnMissingItem</code>
-      <code>testRemoveItemsReturnsMissingKeys</code>
-      <code>testReplaceExistingItem</code>
-      <code>testReplaceItemReturnsFalseIfNonWritable</code>
-      <code>testReplaceItemReturnsFalseOnMissingItem</code>
-      <code>testReplaceItemsReturnsFailedKeys</code>
-      <code>testSetAndDecrementItems</code>
-      <code>testSetAndGetExpiredItem</code>
-      <code>testSetAndGetExpiredItems</code>
-      <code>testSetAndGetItemOfDifferentTypes</code>
-      <code>testSetAndIncrementItems</code>
-      <code>testSetGetHasAndRemoveItemWithNamespace</code>
-      <code>testSetGetHasAndRemoveItemWithoutNamespace</code>
-      <code>testSetGetHasAndRemoveItemsWithNamespace</code>
-      <code>testSetGetHasAndRemoveItemsWithoutNamespace</code>
-      <code>testSetItemReturnsFalseIfNonWritable</code>
-      <code>testSupportedMetadataCapability</code>
-      <code>testTaggable</code>
-      <code>testTaggableFunctionsOnEmptyStorage</code>
-      <code>testTouchItem</code>
-      <code>testTouchItemReturnsFalseIfNonWritable</code>
-      <code>testTouchItemReturnsFalseOnMissingItem</code>
-      <code>testTouchItemsReturnsGivenKeysIfNonWritable</code>
-      <code>testTtlCapabilities</code>
-      <code>waitForFullSecond</code>
     </MissingReturnType>
-    <MixedArgument occurrences="3">
-      <code>$commonAdapterName</code>
+    <MixedArgument occurrences="2">
       <code>$supportedMetadata</code>
       <code>$supportedMetadata</code>
     </MixedArgument>
@@ -490,23 +290,15 @@
       <code>$option</code>
       <code>$option</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="6">
+    <MixedAssignment occurrences="4">
       <code>$supportedMetadata</code>
       <code>$supportedMetadata</code>
-      <code>$targetType</code>
-      <code>$value</code>
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
     <MixedPropertyAssignment occurrences="1">
       <code>$types['object']-&gt;two</code>
     </MixedPropertyAssignment>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$metadata</code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast occurrences="1">
-      <code>$metadata</code>
-    </PossiblyInvalidCast>
     <RedundantConditionGivenDocblockType occurrences="11">
       <code>assertIsArray</code>
       <code>assertIsArray</code>
@@ -527,9 +319,6 @@
       <code>setMode</code>
       <code>setMode</code>
     </UndefinedInterfaceMethod>
-    <UndefinedMethod occurrences="1">
-      <code>assertBool</code>
-    </UndefinedMethod>
     <UnusedVariable occurrences="7">
       <code>$k</code>
       <code>$value</code>
@@ -539,5 +328,30 @@
       <code>$value</code>
       <code>$value</code>
     </UnusedVariable>
+  </file>
+  <file src="src/AdapterOptionsTest.php">
+    <MixedArgument occurrences="1">
+      <code>$calledArgs</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$calledArgs[0]</code>
+    </MixedArrayAccess>
+    <MixedMethodCall occurrences="1">
+      <code>getArrayCopy</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>getArrayCopy</code>
+    </PossiblyInvalidMethodCall>
+  </file>
+  <file src="test/TestAsset/MockAdapter.php">
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;data[$ns][$normalizedKey]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="1">
+      <code>$casToken</code>
+    </MixedAssignment>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>MockAdapter</code>
+    </PropertyNotSetInConstructor>
   </file>
 </files>

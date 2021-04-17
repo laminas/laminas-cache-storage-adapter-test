@@ -12,8 +12,10 @@ use Laminas\Cache\Exception;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
 use Laminas\Cache\Storage\Event;
-use Laminas\Cache\Storage\StorageInterface;
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
+
+use function func_get_args;
 
 /**
  * @group      Laminas_Cache
@@ -21,26 +23,18 @@ use PHPUnit\Framework\TestCase;
  */
 class AdapterOptionsTest extends TestCase
 {
-    /**
-     * Mock of the storage
-     *
-     * @var StorageInterface
-     */
+    /** @var AbstractAdapter */
     protected $storage;
 
-    /**
-     * Adapter options
-     *
-     * @var null|AdapterOptions
-     */
+    /** @var AdapterOptions */
     protected $options;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->options = new AdapterOptions();
     }
 
-    public function testKeyPattern()
+    public function testKeyPattern(): void
     {
         // test default value
         $this->assertSame('', $this->options->getKeyPattern());
@@ -49,7 +43,7 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame('/./', $this->options->getKeyPattern());
     }
 
-    public function testSetKeyPatternAllowEmptyString()
+    public function testSetKeyPatternAllowEmptyString(): void
     {
         // first change to something different as an empty string is the default
         $this->options->setKeyPattern('/.*/');
@@ -58,19 +52,19 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame('', $this->options->getKeyPattern());
     }
 
-    public function testSetKeyPatternThrowsInvalidArgumentExceptionOnInvalidPattern()
+    public function testSetKeyPatternThrowsInvalidArgumentExceptionOnInvalidPattern(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->options->setKeyPattern('foo bar');
     }
 
-    public function testNamespace()
+    public function testNamespace(): void
     {
         $this->assertSame($this->options, $this->options->setNamespace('foobar'));
         $this->assertSame('foobar', $this->options->getNamespace());
     }
 
-    public function testReadable()
+    public function testReadable(): void
     {
         $this->assertSame($this->options, $this->options->setReadable(false));
         $this->assertSame(false, $this->options->getReadable());
@@ -79,7 +73,7 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame(true, $this->options->getReadable());
     }
 
-    public function testWritable()
+    public function testWritable(): void
     {
         $this->assertSame($this->options, $this->options->setWritable(false));
         $this->assertSame(false, $this->options->getWritable());
@@ -88,7 +82,7 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame(true, $this->options->getWritable());
     }
 
-    public function testTtl()
+    public function testTtl(): void
     {
         // infinite default value
         $this->assertSame(0, $this->options->getTtl());
@@ -97,13 +91,13 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame(12345, $this->options->getTtl());
     }
 
-    public function testSetTtlThrowsInvalidArgumentExceptionOnNegativeValue()
+    public function testSetTtlThrowsInvalidArgumentExceptionOnNegativeValue(): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->options->setTtl(-1);
     }
 
-    public function testSetTtlAutoconvertToIntIfPossible()
+    public function testSetTtlAutoconvertToIntIfPossible(): void
     {
         $this->options->setTtl(12345.0);
         $this->assertSame(12345, $this->options->getTtl());
@@ -112,7 +106,7 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame(12345.678, $this->options->getTtl());
     }
 
-    public function testTriggerOptionEvent()
+    public function testTriggerOptionEvent(): void
     {
         // setup an adapter implements EventsCapableInterface
         $adapter = $this->getMockForAbstractClass(AbstractAdapter::class);
@@ -133,7 +127,7 @@ class AdapterOptionsTest extends TestCase
         $this->assertEquals(['writable' => false], $calledArgs[0]->getParams()->getArrayCopy());
     }
 
-    public function testSetFromArrayWithoutPrioritizedOptions()
+    public function testSetFromArrayWithoutPrioritizedOptions(): void
     {
         $this->assertSame($this->options, $this->options->setFromArray([
             'kEy_pattERN' => '/./',
@@ -143,22 +137,30 @@ class AdapterOptionsTest extends TestCase
         $this->assertSame('foobar', $this->options->getNamespace());
     }
 
-    public function testSetFromArrayWithPrioritizedOptions()
+    public function testSetFromArrayWithPrioritizedOptions(): void
     {
         $options = $this->getMockBuilder(AdapterOptions::class)
-            ->setMethods(['setKeyPattern', 'setNamespace', 'setWritable'])
+            ->onlyMethods(['setKeyPattern', 'setNamespace', 'setWritable'])
             ->getMock();
 
         // set key_pattern and namespace to be a prioritized options
-        $optionsRef = new \ReflectionObject($options);
+        $optionsRef = new ReflectionObject($options);
         $propRef    = $optionsRef->getProperty('__prioritizedProperties__');
         $propRef->setAccessible(true);
         $propRef->setValue($options, ['key_pattern', 'namespace']);
 
         // expected order of setter be called
-        $options->expects($this->at(0))->method('setKeyPattern')->with($this->equalTo('/./'));
-        $options->expects($this->at(1))->method('setNamespace')->with($this->equalTo('foobar'));
-        $options->expects($this->at(2))->method('setWritable')->with($this->equalTo(false));
+        $options->expects($this->any())
+            ->method('setKeyPattern')
+            ->with($this->equalTo('/./'));
+
+        $options->expects($this->any())
+            ->method('setNamespace')
+            ->with($this->equalTo('foobar'));
+
+        $options->expects($this->any())
+            ->method('setWritable')
+            ->with($this->equalTo(false));
 
         // send unordered options array
         $this->assertSame($options, $options->setFromArray([

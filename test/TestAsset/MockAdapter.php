@@ -25,7 +25,7 @@ final class MockAdapter extends AbstractAdapter
      */
     protected function internalGetItem(&$normalizedKey, &$success = null, &$casToken = null)
     {
-        $ns = $this->options->getNamespace();
+        $ns      = $this->options->getNamespace();
         $success = isset($this->data[$ns][$normalizedKey]) && $this->options->getReadable();
 
         if (! $success) {
@@ -41,7 +41,7 @@ final class MockAdapter extends AbstractAdapter
      */
     protected function internalSetItem(&$normalizedKey, &$value)
     {
-        $ns = $this->options->getNamespace();
+        $ns                              = $this->options->getNamespace();
         $this->data[$ns][$normalizedKey] = $value;
 
         return true;
