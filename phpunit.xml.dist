@@ -5,6 +5,7 @@
          colors="true">
     <testsuites>
         <testsuite name="Laminas ZendFrameworkBridge Tests">
+            <directory>./src</directory>
             <directory>./test</directory>
         </testsuite>
     </testsuites>
