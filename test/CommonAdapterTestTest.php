@@ -9,17 +9,17 @@
 namespace LaminasTestTest\Cache\Storage\Adapter;
 
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
-use LaminasTest\Cache\Storage\Adapter\CommonAdapterTest;
+use LaminasTest\Cache\Storage\Adapter\AbstractCommonAdapterTest;
 
 /**
  * @group      Laminas_Cache
  */
-final class CommonAdapterTestTest extends CommonAdapterTest
+final class CommonAdapterTestTest extends AbstractCommonAdapterTest
 {
-    public function setUp()
+    protected function setUp(): void
     {
-        $this->_options = new AdapterOptions();
-        $this->_storage = new TestAsset\MockAdapter($this->_options);
+        $this->options = new AdapterOptions();
+        $this->storage = new TestAsset\MockAdapter($this->options);
 
         parent::setUp();
     }
