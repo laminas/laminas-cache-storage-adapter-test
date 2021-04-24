@@ -1,6 +1,6 @@
 # laminas-cache-storage-adapter-test
 
-[![Build Status](https://github.com/laminas/laminas-cache-storage-adapter-test/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-cache-storage-adapter-test/actions/workflows/continuous-integration.yml)
+[![Build Status](https://github.com/laminas/laminas-cache-storage-adapter-test/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-cache-storage-adapter-test/actions/workflows/continuous-integration.yml)
 
 This library provides shared testing files which are used by all cache storage adapter satellites. 
 
