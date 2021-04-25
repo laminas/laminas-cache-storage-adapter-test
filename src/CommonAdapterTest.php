@@ -32,15 +32,15 @@ abstract class CommonAdapterTest extends AbstractCommonAdapterTest
     /**
      * All datatypes of PHP
      *
-     * @var string[]
+     * @var string[]|null
      */
-    protected $_phpDatatypes = [];
+    protected $_phpDatatypes;
 
     protected function setUp(): void
     {
         $this->storage = $this->_storage;
         $this->options = $this->_options;
-        $this->phpDatatypes = $this->_phpDatatypes;
+        $this->phpDatatypes = $this->_phpDatatypes ?? $this->phpDatatypes;
 
         parent::setUp();
     }
