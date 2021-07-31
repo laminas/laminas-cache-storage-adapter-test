@@ -8,7 +8,12 @@ use Interop\Container\ContainerInterface;
 use Laminas\Cache\Storage\AdapterPluginManager;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractPluginManagerDelegatorFactoryTest extends TestCase
+/**
+ * @see TestCase
+ *
+ * @psalm-require-extends TestCase
+ */
+trait PluginManagerDelegatorFactoryTestTrait
 {
     /**
      * A data provider for common storage adapter names
