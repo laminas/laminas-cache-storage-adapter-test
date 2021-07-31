@@ -269,17 +269,6 @@
     </UnusedVariable>
   </file>
   <file src="src/AbstractCommonAdapterTest.php">
-    <InvalidArgument occurrences="9">
-      <code>$capabilities-&gt;getTtlPrecision() * 1000000</code>
-      <code>$capabilities-&gt;getTtlPrecision() * 1000000</code>
-      <code>$capabilities-&gt;getTtlPrecision() * 2000000</code>
-      <code>$wait * 2000000</code>
-      <code>$wait * 2000000</code>
-      <code>$wait * 2000000</code>
-      <code>$wait * 2000000</code>
-      <code>$wait * 2000000</code>
-      <code>$wait * 2000000</code>
-    </InvalidArgument>
     <MixedArgument occurrences="2">
       <code>$supportedMetadata</code>
       <code>$supportedMetadata</code>
