@@ -9,16 +9,13 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
+        "laminas/laminas-cache": "^3.0",
         "cache/integration-tests": "^0.17",
         "phpunit/phpunit": "^9.5"
     },
-    "conflict": {
-        "laminas/laminas-cache": "<2.10"
-    },
     "require-dev": {
-        "laminas/laminas-cache": "^2.10",
-        "laminas/laminas-coding-standard": "^2.1",
-        "psalm/plugin-phpunit": "^0.15.1",
+        "laminas/laminas-coding-standard": "~2.3.0",
+        "psalm/plugin-phpunit": "^0.16.1",
         "vimeo/psalm": "^4.7"
     },
     "config": {
@@ -51,7 +48,6 @@
         "issues": "https://github.com/laminas/laminas-cache-storage-adapter-test/issues",
         "forum": "https://discourse.laminas.dev/",
         "source": "https://github.com/laminas/laminas-cache-storage-adapter-test",
-        "docs": "https://docs.laminas.dev/laminas-cache-storage-adapter-test/",
         "rss": "https://github.com/laminas/laminas-cache-storage-adapter-test/releases.atom"
     }
 }

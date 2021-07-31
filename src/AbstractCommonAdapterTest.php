@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Cache\Storage\Adapter;
 
 use Laminas\Cache\Exception\InvalidArgumentException;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
-use Laminas\Cache\Storage\AdapterPluginManager;
 use Laminas\Cache\Storage\AvailableSpaceCapableInterface;
 use Laminas\Cache\Storage\Capabilities;
 use Laminas\Cache\Storage\ClearByNamespaceInterface;
@@ -17,7 +18,6 @@ use Laminas\Cache\Storage\OptimizableInterface;
 use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Cache\Storage\TaggableInterface;
 use Laminas\Cache\Storage\TotalSpaceCapableInterface;
-use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ErrorHandler;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -51,7 +51,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
     /**
      * All datatypes of PHP
      *
-     * @var string[]
+     * @var list<non-empty-string>
      */
     protected $phpDatatypes = [
         'NULL',
@@ -83,31 +83,15 @@ abstract class AbstractCommonAdapterTest extends TestCase
         // be sure the error handler has been stopped
         if (ErrorHandler::started()) {
             ErrorHandler::stop();
-            $this->fail('ErrorHandler not stopped');
+            self::fail('ErrorHandler not stopped');
         }
-    }
-
-    /**
-     * A data provider for common storage adapter names
-     */
-    abstract public function getCommonAdapterNamesProvider();
-
-    /**
-     * @dataProvider getCommonAdapterNamesProvider
-     */
-    public function testAdapterPluginManagerWithCommonNames(string $commonAdapterName): void
-    {
-        $pluginManager = new AdapterPluginManager(new ServiceManager());
-        $this->assertTrue(
-            $pluginManager->has($commonAdapterName),
-            "Storage adapter name '{$commonAdapterName}' not found in storage adapter plugin manager"
-        );
     }
 
     public function testOptionNamesValid(): void
     {
         $options = $this->storage->getOptions()->toArray();
-        foreach ($options as $name => $value) {
+
+        foreach (array_keys($options) as $name) {
             $this->assertMatchesRegularExpression(
                 '/^[a-z]+[a-z0-9_]*[a-z0-9]+$/',
                 $name,
@@ -119,10 +103,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
     public function testGettersAndSettersOfOptionsExists(): void
     {
         $options = $this->storage->getOptions();
-        /**
-         * @var mixed $value
-         */
-        foreach ($options->toArray() as $option => $value) {
+        foreach (array_keys($options->toArray()) as $option) {
             if ($option === 'adapter') {
                 // Skip this, as it's a "special" value
                 continue;
@@ -152,6 +133,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
     public function testOptionsFluentInterface(): void
     {
         $options = $this->storage->getOptions();
+        /** @psalm-suppress MixedAssignment */
         foreach ($options->toArray() as $option => $value) {
             $method = ucwords(str_replace('_', ' ', $option));
             $method = 'set' . str_replace(' ', '', $method);
