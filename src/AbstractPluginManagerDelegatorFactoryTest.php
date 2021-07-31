@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Cache\Storage\Adapter;
 
+use Interop\Container\ContainerInterface;
 use Laminas\Cache\Storage\AdapterPluginManager;
 use PHPUnit\Framework\TestCase;
 
@@ -19,8 +20,10 @@ abstract class AbstractPluginManagerDelegatorFactoryTest extends TestCase
     /**
      * Should provide the provisioned plugin manager.
      * Starting with laminas-cache v3.0.0, all cache adapters have to provide themselves to the plugin manager.
+     *
+     * @psalm-return callable(ContainerInterface,string,callable):AdapterPluginManager
      */
-    abstract public function getProvisionedPluginManager(): AdapterPluginManager;
+    abstract public function getDelegatorFactory(): callable;
 
     /**
      * @psalm-param non-empty-string $commonAdapterName
@@ -28,7 +31,18 @@ abstract class AbstractPluginManagerDelegatorFactoryTest extends TestCase
      */
     public function testAdapterPluginManagerWithCommonNames(string $commonAdapterName): void
     {
-        $pluginManager = $this->getProvisionedPluginManager();
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->expects(self::never())
+            ->method(self::anything());
+
+        $pluginManager = $this->getDelegatorFactory()(
+            $container,
+            AdapterPluginManager::class,
+            static function (): AdapterPluginManager {
+                return new AdapterPluginManager();
+            }
+        );
         $this->assertTrue(
             $pluginManager->has($commonAdapterName),
             "Storage adapter name '{$commonAdapterName}' not found in storage adapter plugin manager"
