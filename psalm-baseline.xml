@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.7.0@d4377c0baf3ffbf0b1ec6998e8d1be2a40971005">
+<files psalm-version="4.9.1@7e137f5b95f7394607f5d0631172ff4c2da46781">
   <file src="src/AbstractAdapterTest.php">
     <DocblockTypeContradiction occurrences="1">
       <code>new AdapterOptions()</code>
@@ -261,13 +261,15 @@
       <code>expects</code>
       <code>expects</code>
     </UndefinedMethod>
-    <UnusedVariable occurrences="2">
-      <code>$key</code>
+    <UnusedForeachValue occurrences="1">
       <code>$value</code>
+    </UnusedForeachValue>
+    <UnusedVariable occurrences="1">
+      <code>$key</code>
     </UnusedVariable>
   </file>
   <file src="src/AbstractCommonAdapterTest.php">
-    <InvalidScalarArgument occurrences="9">
+    <InvalidArgument occurrences="9">
       <code>$capabilities-&gt;getTtlPrecision() * 1000000</code>
       <code>$capabilities-&gt;getTtlPrecision() * 1000000</code>
       <code>$capabilities-&gt;getTtlPrecision() * 2000000</code>
@@ -277,10 +279,7 @@
       <code>$wait * 2000000</code>
       <code>$wait * 2000000</code>
       <code>$wait * 2000000</code>
-    </InvalidScalarArgument>
-    <MissingReturnType occurrences="1">
-      <code>getCommonAdapterNamesProvider</code>
-    </MissingReturnType>
+    </InvalidArgument>
     <MixedArgument occurrences="2">
       <code>$supportedMetadata</code>
       <code>$supportedMetadata</code>
@@ -290,11 +289,9 @@
       <code>$option</code>
       <code>$option</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="2">
       <code>$supportedMetadata</code>
       <code>$supportedMetadata</code>
-      <code>$value</code>
-      <code>$value</code>
     </MixedAssignment>
     <MixedPropertyAssignment occurrences="1">
       <code>$types['object']-&gt;two</code>
@@ -319,14 +316,16 @@
       <code>setMode</code>
       <code>setMode</code>
     </UndefinedInterfaceMethod>
-    <UnusedVariable occurrences="7">
+    <UnusedForeachValue occurrences="4">
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </UnusedForeachValue>
+    <UnusedVariable occurrences="1">
       <code>$k</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
     </UnusedVariable>
   </file>
   <file src="src/AdapterOptionsTest.php">
