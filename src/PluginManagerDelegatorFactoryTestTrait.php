@@ -44,8 +44,8 @@ trait PluginManagerDelegatorFactoryTestTrait
         $pluginManager = $this->getDelegatorFactory()(
             $container,
             AdapterPluginManager::class,
-            static function (): AdapterPluginManager {
-                return new AdapterPluginManager();
+            static function () use ($container): AdapterPluginManager {
+                return new AdapterPluginManager($container);
             }
         );
         $this->assertTrue(
