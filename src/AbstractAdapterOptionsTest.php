@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Cache\Storage\Adapter;
 
+use ArrayObject;
 use Laminas\Cache\Exception;
 use Laminas\Cache\Storage\Adapter\AbstractAdapter;
 use Laminas\Cache\Storage\Adapter\AdapterOptions;
@@ -13,11 +14,7 @@ use ReflectionObject;
 
 use function func_get_args;
 
-/**
- * @group      Laminas_Cache
- * @covers Laminas\Cache\Storage\Adapter\AdapterOptions<extended>
- */
-class AdapterOptionsTest extends TestCase
+abstract class AbstractAdapterOptionsTest extends TestCase
 {
     /** @var AbstractAdapter */
     protected $storage;
@@ -33,10 +30,10 @@ class AdapterOptionsTest extends TestCase
     public function testKeyPattern(): void
     {
         // test default value
-        $this->assertSame('', $this->options->getKeyPattern());
+        self::assertSame('', $this->options->getKeyPattern());
 
-        $this->assertSame($this->options, $this->options->setKeyPattern('/./'));
-        $this->assertSame('/./', $this->options->getKeyPattern());
+        self::assertSame($this->options, $this->options->setKeyPattern('/./'));
+        self::assertSame('/./', $this->options->getKeyPattern());
     }
 
     public function testSetKeyPatternAllowEmptyString(): void
@@ -45,7 +42,7 @@ class AdapterOptionsTest extends TestCase
         $this->options->setKeyPattern('/.*/');
 
         $this->options->setKeyPattern('');
-        $this->assertSame('', $this->options->getKeyPattern());
+        self::assertSame('', $this->options->getKeyPattern());
     }
 
     public function testSetKeyPatternThrowsInvalidArgumentExceptionOnInvalidPattern(): void
@@ -56,35 +53,35 @@ class AdapterOptionsTest extends TestCase
 
     public function testNamespace(): void
     {
-        $this->assertSame($this->options, $this->options->setNamespace('foobar'));
-        $this->assertSame('foobar', $this->options->getNamespace());
+        self::assertSame($this->options, $this->options->setNamespace('foobar'));
+        self::assertSame('foobar', $this->options->getNamespace());
     }
 
     public function testReadable(): void
     {
-        $this->assertSame($this->options, $this->options->setReadable(false));
-        $this->assertSame(false, $this->options->getReadable());
+        self::assertSame($this->options, $this->options->setReadable(false));
+        self::assertSame(false, $this->options->getReadable());
 
-        $this->assertSame($this->options, $this->options->setReadable(true));
-        $this->assertSame(true, $this->options->getReadable());
+        self::assertSame($this->options, $this->options->setReadable(true));
+        self::assertSame(true, $this->options->getReadable());
     }
 
     public function testWritable(): void
     {
-        $this->assertSame($this->options, $this->options->setWritable(false));
-        $this->assertSame(false, $this->options->getWritable());
+        self::assertSame($this->options, $this->options->setWritable(false));
+        self::assertSame(false, $this->options->getWritable());
 
-        $this->assertSame($this->options, $this->options->setWritable(true));
-        $this->assertSame(true, $this->options->getWritable());
+        self::assertSame($this->options, $this->options->setWritable(true));
+        self::assertSame(true, $this->options->getWritable());
     }
 
     public function testTtl(): void
     {
         // infinite default value
-        $this->assertSame(0, $this->options->getTtl());
+        self::assertSame(0, $this->options->getTtl());
 
-        $this->assertSame($this->options, $this->options->setTtl(12345));
-        $this->assertSame(12345, $this->options->getTtl());
+        self::assertSame($this->options, $this->options->setTtl(12345));
+        self::assertSame(12345, $this->options->getTtl());
     }
 
     public function testSetTtlThrowsInvalidArgumentExceptionOnNegativeValue(): void
@@ -96,10 +93,10 @@ class AdapterOptionsTest extends TestCase
     public function testSetTtlAutoconvertToIntIfPossible(): void
     {
         $this->options->setTtl(12345.0);
-        $this->assertSame(12345, $this->options->getTtl());
+        self::assertSame(12345, $this->options->getTtl());
 
         $this->options->setTtl(12345.678);
-        $this->assertSame(12345.678, $this->options->getTtl());
+        self::assertSame(12345.678, $this->options->getTtl());
     }
 
     public function testTriggerOptionEvent(): void
@@ -118,19 +115,22 @@ class AdapterOptionsTest extends TestCase
         $this->options->setWritable(false);
 
         // assert (hopefully) called listener and arguments
-        $this->assertCount(1, $calledArgs, '"option" event was not triggered or got a wrong number of arguments');
-        $this->assertInstanceOf(Event::class, $calledArgs[0]);
-        $this->assertEquals(['writable' => false], $calledArgs[0]->getParams()->getArrayCopy());
+        self::assertIsArray($calledArgs, '"option" event was not triggered');
+        $args = $calledArgs[0];
+        self::assertInstanceOf(Event::class, $args);
+        $params = $args->getParams();
+        self::assertInstanceOf(ArrayObject::class, $params);
+        self::assertEquals(['writable' => false], $params->getArrayCopy());
     }
 
     public function testSetFromArrayWithoutPrioritizedOptions(): void
     {
-        $this->assertSame($this->options, $this->options->setFromArray([
+        self::assertSame($this->options, $this->options->setFromArray([
             'kEy_pattERN' => '/./',
             'nameSPACE'   => 'foobar',
         ]));
-        $this->assertSame('/./', $this->options->getKeyPattern());
-        $this->assertSame('foobar', $this->options->getNamespace());
+        self::assertSame('/./', $this->options->getKeyPattern());
+        self::assertSame('foobar', $this->options->getNamespace());
     }
 
     public function testSetFromArrayWithPrioritizedOptions(): void
@@ -159,7 +159,7 @@ class AdapterOptionsTest extends TestCase
             ->with($this->equalTo(false));
 
         // send unordered options array
-        $this->assertSame($options, $options->setFromArray([
+        self::assertSame($options, $options->setFromArray([
             'nAmeSpace'   => 'foobar',
             'WriTAble'    => false,
             'KEY_paTTern' => '/./',
