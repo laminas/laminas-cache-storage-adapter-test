@@ -37,9 +37,6 @@ use function time;
 use function ucwords;
 use function usleep;
 
-/**
- * @group      Laminas_Cache
- */
 abstract class AbstractCommonAdapterTest extends TestCase
 {
     /** @var StorageInterface */
@@ -66,12 +63,12 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             StorageInterface::class,
             $this->storage,
             'Storage adapter instance is needed for tests'
         );
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             AdapterOptions::class,
             $this->options,
             'Options instance is needed for tests'
@@ -92,7 +89,8 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $options = $this->storage->getOptions()->toArray();
 
         foreach (array_keys($options) as $name) {
-            $this->assertMatchesRegularExpression(
+            self::assertIsString($name);
+            self::assertMatchesRegularExpression(
                 '/^[a-z]+[a-z0-9_]*[a-z0-9]+$/',
                 $name,
                 "Invalid option name '{$name}'"
@@ -104,19 +102,21 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $options = $this->storage->getOptions();
         foreach (array_keys($options->toArray()) as $option) {
+            self::assertIsString($option);
             if ($option === 'adapter') {
                 // Skip this, as it's a "special" value
                 continue;
             }
+
             $method = ucwords(str_replace('_', ' ', $option));
             $method = str_replace(' ', '', $method);
 
-            $this->assertTrue(
+            self::assertTrue(
                 method_exists($options, 'set' . $method),
                 "Missing method 'set'{$method}"
             );
 
-            $this->assertTrue(
+            self::assertTrue(
                 method_exists($options, 'get' . $method),
                 "Missing method 'get'{$method}"
             );
@@ -127,7 +127,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $options = $this->storage->getOptions();
         $this->storage->setOptions($options);
-        $this->assertSame($options, $this->storage->getOptions());
+        self::assertSame($options, $this->storage->getOptions());
     }
 
     public function testOptionsFluentInterface(): void
@@ -135,16 +135,17 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $options = $this->storage->getOptions();
         /** @psalm-suppress MixedAssignment */
         foreach ($options->toArray() as $option => $value) {
+            self::assertIsString($option);
             $method = ucwords(str_replace('_', ' ', $option));
             $method = 'set' . str_replace(' ', '', $method);
-            $this->assertSame(
+            self::assertSame(
                 $options,
                 $options->{$method}($value),
                 "Method '{$method}' doesn't implement the fluent interface"
             );
         }
 
-        $this->assertSame(
+        self::assertSame(
             $this->storage,
             $this->storage->setOptions($options),
             "Method 'setOptions' doesn't implement the fluent interface"
@@ -154,29 +155,28 @@ abstract class AbstractCommonAdapterTest extends TestCase
     public function testGetCapabilities(): void
     {
         $capabilities = $this->storage->getCapabilities();
-        $this->assertInstanceOf(Capabilities::class, $capabilities);
+        self::assertInstanceOf(Capabilities::class, $capabilities);
     }
 
     public function testDatatypesCapability(): void
     {
         $capabilities = $this->storage->getCapabilities();
         $datatypes    = $capabilities->getSupportedDatatypes();
-        $this->assertIsArray($datatypes);
 
         foreach ($datatypes as $sourceType => $targetType) {
-            $this->assertContains(
+            self::assertContains(
                 $sourceType,
                 $this->phpDatatypes,
                 "Unknown source type '{$sourceType}'"
             );
             if (is_string($targetType)) {
-                $this->assertContains(
+                self::assertContains(
                     $targetType,
                     $this->phpDatatypes,
                     "Unknown target type '{$targetType}'"
                 );
             } else {
-                $this->assertIsBool($targetType);
+                self::assertIsBool($targetType);
             }
         }
     }
@@ -185,10 +185,9 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $capabilities = $this->storage->getCapabilities();
         $metadata     = $capabilities->getSupportedMetadata();
-        $this->assertIsArray($metadata);
 
         foreach ($metadata as $property) {
-            $this->assertIsString($property);
+            self::assertIsString($property);
         }
     }
 
@@ -196,38 +195,38 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $capabilities = $this->storage->getCapabilities();
 
-        $this->assertIsInt($capabilities->getMaxTtl());
-        $this->assertGreaterThanOrEqual(0, $capabilities->getMaxTtl());
+        self::assertIsInt($capabilities->getMaxTtl());
+        self::assertGreaterThanOrEqual(0, $capabilities->getMaxTtl());
 
-        $this->assertIsBool($capabilities->getStaticTtl());
+        self::assertIsBool($capabilities->getStaticTtl());
 
-        $this->assertIsNumeric($capabilities->getTtlPrecision());
-        $this->assertGreaterThan(0, $capabilities->getTtlPrecision());
+        self::assertIsNumeric($capabilities->getTtlPrecision());
+        self::assertGreaterThan(0, $capabilities->getTtlPrecision());
 
-        $this->assertIsInt($capabilities->getLockOnExpire());
+        self::assertIsInt($capabilities->getLockOnExpire());
     }
 
     public function testKeyCapabilities(): void
     {
         $capabilities = $this->storage->getCapabilities();
 
-        $this->assertIsInt($capabilities->getMaxKeyLength());
-        $this->assertGreaterThanOrEqual(-1, $capabilities->getMaxKeyLength());
+        self::assertIsInt($capabilities->getMaxKeyLength());
+        self::assertGreaterThanOrEqual(-1, $capabilities->getMaxKeyLength());
 
-        $this->assertIsBool($capabilities->getNamespaceIsPrefix());
+        self::assertIsBool($capabilities->getNamespaceIsPrefix());
 
-        $this->assertIsString($capabilities->getNamespaceSeparator());
+        self::assertIsString($capabilities->getNamespaceSeparator());
     }
 
     public function testHasItemReturnsTrueOnValidItem(): void
     {
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertTrue($this->storage->hasItem('key'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->hasItem('key'));
     }
 
     public function testHasItemReturnsFalseOnMissingItem(): void
     {
-        $this->assertFalse($this->storage->hasItem('key'));
+        self::assertFalse($this->storage->hasItem('key'));
     }
 
     public function testHasItemReturnsFalseOnExpiredItem(): void
@@ -243,50 +242,50 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         $this->waitForFullSecond();
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
 
         // wait until the item expired
         $wait = $ttl + $capabilities->getTtlPrecision();
         usleep((int) $wait * 2000000);
 
         if (! $capabilities->getUseRequestTime()) {
-            $this->assertFalse($this->storage->hasItem('key'));
+            self::assertFalse($this->storage->hasItem('key'));
         } else {
-            $this->assertTrue($this->storage->hasItem('key'));
+            self::assertTrue($this->storage->hasItem('key'));
         }
     }
 
     public function testHasItemNonReadable(): void
     {
-        $this->assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
 
         $this->options->setReadable(false);
-        $this->assertFalse($this->storage->hasItem('key'));
+        self::assertFalse($this->storage->hasItem('key'));
     }
 
     public function testHasItemsReturnsKeysOfFoundItems(): void
     {
-        $this->assertTrue($this->storage->setItem('key1', 'value1'));
-        $this->assertTrue($this->storage->setItem('key2', 'value2'));
+        self::assertTrue($this->storage->setItem('key1', 'value1'));
+        self::assertTrue($this->storage->setItem('key2', 'value2'));
 
         $result = $this->storage->hasItems(['missing', 'key1', 'key2']);
         sort($result);
 
         $exprectedResult = ['key1', 'key2'];
-        $this->assertEquals($exprectedResult, $result);
+        self::assertEquals($exprectedResult, $result);
     }
 
     public function testHasItemsReturnsEmptyArrayIfNonReadable(): void
     {
-        $this->assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
 
         $this->options->setReadable(false);
-        $this->assertEquals([], $this->storage->hasItems(['key']));
+        self::assertEquals([], $this->storage->hasItems(['key']));
     }
 
     public function testGetItemReturnsNullOnMissingItem(): void
     {
-        $this->assertNull($this->storage->getItem('unknwon'));
+        self::assertNull($this->storage->getItem('unknwon'));
     }
 
     public function testGetItemSetsSuccessFlag(): void
@@ -295,12 +294,12 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         // $success = false on get missing item
         $this->storage->getItem('unknown', $success);
-        $this->assertFalse($success);
+        self::assertFalse($success);
 
         // $success = true on get valid item
         $this->storage->setItem('test', 'test');
         $this->storage->getItem('test', $success);
-        $this->assertTrue($success);
+        self::assertTrue($success);
     }
 
     public function testGetItemReturnsNullOnExpiredItem(): void
@@ -326,21 +325,21 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $wait = $ttl + $capabilities->getTtlPrecision();
         usleep((int) $wait * 2000000);
 
-        $this->assertNull($this->storage->getItem('key'));
+        self::assertNull($this->storage->getItem('key'));
     }
 
     public function testGetItemReturnsNullIfNonReadable(): void
     {
         $this->options->setReadable(false);
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertNull($this->storage->getItem('key'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertNull($this->storage->getItem('key'));
     }
 
     public function testGetItemsReturnsKeyValuePairsOfFoundItems(): void
     {
-        $this->assertTrue($this->storage->setItem('key1', 'value1'));
-        $this->assertTrue($this->storage->setItem('key2', 'value2'));
+        self::assertTrue($this->storage->setItem('key1', 'value1'));
+        self::assertTrue($this->storage->setItem('key2', 'value2'));
 
         $result = $this->storage->getItems(['missing', 'key1', 'key2']);
         ksort($result);
@@ -349,15 +348,15 @@ abstract class AbstractCommonAdapterTest extends TestCase
             'key1' => 'value1',
             'key2' => 'value2',
         ];
-        $this->assertEquals($exprectedResult, $result);
+        self::assertEquals($exprectedResult, $result);
     }
 
     public function testGetItemsReturnsEmptyArrayIfNonReadable(): void
     {
         $this->options->setReadable(false);
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertEquals([], $this->storage->getItems(['key']));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertEquals([], $this->storage->getItems(['key']));
     }
 
     public function testGetMetadata(): void
@@ -365,26 +364,28 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $capabilities       = $this->storage->getCapabilities();
         $supportedMetadatas = $capabilities->getSupportedMetadata();
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
         $metadata = $this->storage->getMetadata('key');
 
-        $this->assertIsArray($metadata);
+        self::assertIsArray($metadata);
+        /** @psalm-suppress MixedAssignment */
         foreach ($supportedMetadatas as $supportedMetadata) {
-            $this->assertArrayHasKey($supportedMetadata, $metadata);
+            self::assertIsString($supportedMetadata);
+            self::assertArrayHasKey($supportedMetadata, $metadata);
         }
     }
 
     public function testGetMetadataReturnsFalseOnMissingItem(): void
     {
-        $this->assertFalse($this->storage->getMetadata('unknown'));
+        self::assertFalse($this->storage->getMetadata('unknown'));
     }
 
     public function testGetMetadataReturnsFalseIfNonReadable(): void
     {
         $this->options->setReadable(false);
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertFalse($this->storage->getMetadata('key'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertFalse($this->storage->getMetadata('key'));
     }
 
     public function testGetMetadatas(): void
@@ -396,15 +397,16 @@ abstract class AbstractCommonAdapterTest extends TestCase
             'key1' => 'value1',
             'key2' => 'value2',
         ];
-        $this->assertSame([], $this->storage->setItems($items));
+        self::assertSame([], $this->storage->setItems($items));
 
         $metadatas = $this->storage->getMetadatas(array_keys($items));
-        $this->assertIsArray($metadatas);
-        $this->assertSame(count($items), count($metadatas));
-        foreach ($metadatas as $k => $metadata) {
-            $this->assertIsArray($metadata);
+        self::assertSame(count($items), count($metadatas));
+        foreach ($metadatas as $metadata) {
+            self::assertIsArray($metadata);
+            /** @psalm-suppress MixedAssignment */
             foreach ($supportedMetadatas as $supportedMetadata) {
-                $this->assertArrayHasKey($supportedMetadata, $metadata);
+                self::assertIsString($supportedMetadata);
+                self::assertArrayHasKey($supportedMetadata, $metadata);
             }
         }
     }
@@ -423,21 +425,21 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $this->options->setReadable(false);
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertEquals([], $this->storage->getMetadatas(['key']));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertEquals([], $this->storage->getMetadatas(['key']));
     }
 
     public function testSetGetHasAndRemoveItemWithoutNamespace(): void
     {
         $this->storage->getOptions()->setNamespace('');
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertEquals('value', $this->storage->getItem('key'));
-        $this->assertTrue($this->storage->hasItem('key'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertEquals('value', $this->storage->getItem('key'));
+        self::assertTrue($this->storage->hasItem('key'));
 
-        $this->assertTrue($this->storage->removeItem('key'));
-        $this->assertFalse($this->storage->hasItem('key'));
-        $this->assertNull($this->storage->getItem('key'));
+        self::assertTrue($this->storage->removeItem('key'));
+        self::assertFalse($this->storage->hasItem('key'));
+        self::assertNull($this->storage->getItem('key'));
     }
 
     public function testSetGetHasAndRemoveItemsWithoutNamespace(): void
@@ -450,38 +452,34 @@ abstract class AbstractCommonAdapterTest extends TestCase
             'key3' => 'value3',
         ];
 
-        $this->assertSame([], $this->storage->setItems($items));
+        self::assertSame([], $this->storage->setItems($items));
 
         $rs = $this->storage->getItems(array_keys($items));
 
-        $this->assertIsArray($rs);
         foreach ($items as $key => $value) {
-            $this->assertArrayHasKey($key, $rs);
-            $this->assertEquals($value, $rs[$key]);
+            self::assertArrayHasKey($key, $rs);
+            self::assertEquals($value, $rs[$key]);
         }
 
         $rs = $this->storage->hasItems(array_keys($items));
-        $this->assertIsArray($rs);
-        $this->assertEquals(count($items), count($rs));
-        foreach ($items as $key => $value) {
-            $this->assertContains($key, $rs);
+        self::assertEquals(count($items), count($rs));
+        foreach (array_keys($items) as $key) {
+            self::assertContains($key, $rs);
         }
 
-        $this->assertSame(['missing'], $this->storage->removeItems(['missing', 'key1', 'key3']));
+        self::assertSame(['missing'], $this->storage->removeItems(['missing', 'key1', 'key3']));
         unset($items['key1'], $items['key3']);
 
         $rs = $this->storage->getItems(array_keys($items));
-        $this->assertIsArray($rs);
         foreach ($items as $key => $value) {
-            $this->assertArrayHasKey($key, $rs);
-            $this->assertEquals($value, $rs[$key]);
+            self::assertArrayHasKey($key, $rs);
+            self::assertEquals($value, $rs[$key]);
         }
 
         $rs = $this->storage->hasItems(array_keys($items));
-        $this->assertIsArray($rs);
-        $this->assertEquals(count($items), count($rs));
-        foreach ($items as $key => $value) {
-            $this->assertContains($key, $rs);
+        self::assertEquals(count($items), count($rs));
+        foreach (array_keys($items) as $key) {
+            self::assertContains($key, $rs);
         }
     }
 
@@ -489,30 +487,30 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         // write "key" to default namespace
         $this->options->setNamespace('defaultns1');
-        $this->assertTrue($this->storage->setItem('key', 'defaultns1'));
+        self::assertTrue($this->storage->setItem('key', 'defaultns1'));
 
         // write "key" to an other default namespace
         $this->options->setNamespace('defaultns2');
-        $this->assertTrue($this->storage->setItem('key', 'defaultns2'));
+        self::assertTrue($this->storage->setItem('key', 'defaultns2'));
 
         // test value of defaultns2
-        $this->assertTrue($this->storage->hasItem('key'));
-        $this->assertEquals('defaultns2', $this->storage->getItem('key'));
+        self::assertTrue($this->storage->hasItem('key'));
+        self::assertEquals('defaultns2', $this->storage->getItem('key'));
 
         // test value of defaultns1
         $this->options->setNamespace('defaultns1');
-        $this->assertTrue($this->storage->hasItem('key'));
-        $this->assertEquals('defaultns1', $this->storage->getItem('key'));
+        self::assertTrue($this->storage->hasItem('key'));
+        self::assertEquals('defaultns1', $this->storage->getItem('key'));
 
         // remove item of defaultns1
         $this->options->setNamespace('defaultns1');
-        $this->assertTrue($this->storage->removeItem('key'));
-        $this->assertFalse($this->storage->hasItem('key'));
+        self::assertTrue($this->storage->removeItem('key'));
+        self::assertFalse($this->storage->hasItem('key'));
 
         // remove item of defaultns2
         $this->options->setNamespace('defaultns2');
-        $this->assertTrue($this->storage->removeItem('key'));
-        $this->assertFalse($this->storage->hasItem('key'));
+        self::assertTrue($this->storage->removeItem('key'));
+        self::assertFalse($this->storage->hasItem('key'));
     }
 
     public function testSetGetHasAndRemoveItemsWithNamespace(): void
@@ -524,49 +522,42 @@ abstract class AbstractCommonAdapterTest extends TestCase
         ];
 
         $this->options->setNamespace('defaultns1');
-        $this->assertSame([], $this->storage->setItems($items));
+        self::assertSame([], $this->storage->setItems($items));
 
         $this->options->setNamespace('defaultns2');
-        $this->assertSame([], $this->storage->hasItems(array_keys($items)));
+        self::assertSame([], $this->storage->hasItems(array_keys($items)));
 
         $this->options->setNamespace('defaultns1');
         $rs = $this->storage->getItems(array_keys($items));
-        $this->assertIsArray($rs);
         foreach ($items as $key => $value) {
-            $this->assertArrayHasKey($key, $rs);
-            $this->assertEquals($value, $rs[$key]);
+            self::assertArrayHasKey($key, $rs);
+            self::assertEquals($value, $rs[$key]);
         }
 
         $rs = $this->storage->hasItems(array_keys($items));
-        $this->assertIsArray($rs);
-        $this->assertEquals(count($items), count($rs));
-        foreach ($items as $key => $value) {
-            $this->assertContains($key, $rs);
+        self::assertEquals(count($items), count($rs));
+        foreach (array_keys($items) as $key) {
+            self::assertContains($key, $rs);
         }
 
         // remove the first and the last item
-        $this->assertSame(['missing'], $this->storage->removeItems(['missing', 'key1', 'key3']));
+        self::assertSame(['missing'], $this->storage->removeItems(['missing', 'key1', 'key3']));
         unset($items['key1'], $items['key3']);
 
         $rs = $this->storage->getItems(array_keys($items));
-        $this->assertIsArray($rs);
         foreach ($items as $key => $value) {
-            $this->assertArrayHasKey($key, $rs);
-            $this->assertEquals($value, $rs[$key]);
+            self::assertArrayHasKey($key, $rs);
+            self::assertEquals($value, $rs[$key]);
         }
 
         $rs = $this->storage->hasItems(array_keys($items));
-        $this->assertIsArray($rs);
-        $this->assertEquals(count($items), count($rs));
-        foreach ($items as $key => $value) {
-            $this->assertContains($key, $rs);
+        self::assertEquals(count($items), count($rs));
+        foreach (array_keys($items) as $key) {
+            self::assertContains($key, $rs);
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testSetAndGetExpiredItem()
+    public function testSetAndGetExpiredItem(): void
     {
         $capabilities = $this->storage->getCapabilities();
 
@@ -587,16 +578,16 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         if ($capabilities->getUseRequestTime()) {
             // Can't test much more if the request time will be used
-            $this->assertEquals('value', $this->storage->getItem('key'));
+            self::assertEquals('value', $this->storage->getItem('key'));
             return;
         }
 
-        $this->assertNull($this->storage->getItem('key'));
+        self::assertNull($this->storage->getItem('key'));
 
         if ($capabilities->getLockOnExpire()) {
-            $this->assertEquals('value', $this->storage->getItem('key'));
+            self::assertEquals('value', $this->storage->getItem('key'));
         } else {
-            $this->assertNull($this->storage->getItem('key'));
+            self::assertNull($this->storage->getItem('key'));
         }
     }
 
@@ -623,13 +614,13 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         // set items with high TTL
         $this->options->setTtl(123456);
-        $this->assertSame([], $this->storage->setItems($itemsHigh));
+        self::assertSame([], $this->storage->setItems($itemsHigh));
 
         // set items with low TTL
         $ttl = $capabilities->getTtlPrecision();
         $this->options->setTtl($ttl);
         $this->waitForFullSecond();
-        $this->assertSame([], $this->storage->setItems($itemsLow));
+        self::assertSame([], $this->storage->setItems($itemsLow));
 
         // wait until expired
         $wait = $ttl + $capabilities->getTtlPrecision();
@@ -642,30 +633,30 @@ abstract class AbstractCommonAdapterTest extends TestCase
             // if item expiration will be done on read there is no difference
             // between the previos set items in TTL.
             // -> all items will be expired
-            $this->assertEquals([], $rs);
+            self::assertEquals([], $rs);
 
             // after disabling TTL all items will be available
             $this->options->setTtl(0);
             $rs = $this->storage->getItems(array_keys($items));
             ksort($rs); // make comparable
-            $this->assertEquals($items, $rs);
+            self::assertEquals($items, $rs);
         } elseif ($capabilities->getUseRequestTime()) {
             // if the request time will be used as current time all items will
             // be available as expiration doesn't work within the same process
-            $this->assertEquals($items, $rs);
+            self::assertEquals($items, $rs);
         } else {
-            $this->assertEquals($itemsHigh, $rs);
+            self::assertEquals($itemsHigh, $rs);
 
             // if 'lock-on-expire' is not supported the low items will be still missing
             // if 'lock-on-expire' is supported the low items could be retrieved
             $rs = $this->storage->getItems(array_keys($items));
             ksort($rs); // make comparable
             if (! $capabilities->getLockOnExpire()) {
-                $this->assertEquals($itemsHigh, $rs);
+                self::assertEquals($itemsHigh, $rs);
             } else {
                 $itemsExpected = array_merge($itemsLow, $itemsHigh);
                 ksort($itemsExpected); // make comparable
-                $this->assertEquals($itemsExpected, $rs);
+                self::assertEquals($itemsExpected, $rs);
             }
         }
     }
@@ -674,19 +665,21 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $capabilities = $this->storage->getCapabilities();
 
-        $types                       = [
+        $object             = new stdClass();
+        $object->one        = 'one';
+        $object->two        = new stdClass();
+        $object->two->three = 'three';
+
+        $types = [
             'NULL'     => null,
             'boolean'  => true,
             'integer'  => 12345,
             'double'   => 123.45,
             'string'   => 'string', // already tested
             'array'    => ['one', 'tow' => 'two', 'three' => ['four' => 'four']],
-            'object'   => new stdClass(),
+            'object'   => $object,
             'resource' => fopen(__FILE__, 'r'),
         ];
-        $types['object']->one        = 'one';
-        $types['object']->two        = new stdClass();
-        $types['object']->two->three = 'three';
 
         /**
          * @var string $sourceType
@@ -698,14 +691,14 @@ abstract class AbstractCommonAdapterTest extends TestCase
             }
 
             $value = $types[$sourceType];
-            $this->assertTrue($this->storage->setItem('key', $value), "Failed to set type '$sourceType'");
+            self::assertTrue($this->storage->setItem('key', $value), "Failed to set type '$sourceType'");
 
             if ($targetType === true) {
-                $this->assertSame($value, $this->storage->getItem('key'));
+                self::assertSame($value, $this->storage->getItem('key'));
             } elseif (is_string($targetType)) {
 //                $typeval = $targetType . 'val';
 //                $typeval($value);
-                $this->assertEquals($value, $this->storage->getItem('key'));
+                self::assertEquals($value, $this->storage->getItem('key'));
             }
         }
     }
@@ -714,42 +707,42 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $this->options->setWritable(false);
 
-        $this->assertFalse($this->storage->setItem('key', 'value'));
-        $this->assertFalse($this->storage->hasItem('key'));
+        self::assertFalse($this->storage->setItem('key', 'value'));
+        self::assertFalse($this->storage->hasItem('key'));
     }
 
     public function testAddNewItem(): void
     {
-        $this->assertTrue($this->storage->addItem('key', 'value'));
-        $this->assertTrue($this->storage->hasItem('key'));
+        self::assertTrue($this->storage->addItem('key', 'value'));
+        self::assertTrue($this->storage->hasItem('key'));
     }
 
     public function testAddItemReturnsFalseIfItemAlreadyExists(): void
     {
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertFalse($this->storage->addItem('key', 'newValue'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertFalse($this->storage->addItem('key', 'newValue'));
     }
 
     public function testAddItemReturnsFalseIfNonWritable(): void
     {
         $this->options->setWritable(false);
 
-        $this->assertFalse($this->storage->addItem('key', 'value'));
-        $this->assertFalse($this->storage->hasItem('key'));
+        self::assertFalse($this->storage->addItem('key', 'value'));
+        self::assertFalse($this->storage->hasItem('key'));
     }
 
     public function testAddItemsReturnsFailedKeys(): void
     {
-        $this->assertTrue($this->storage->setItem('key1', 'value1'));
+        self::assertTrue($this->storage->setItem('key1', 'value1'));
 
         $failedKeys = $this->storage->addItems([
             'key1' => 'XYZ',
             'key2' => 'value2',
         ]);
 
-        $this->assertSame(['key1'], $failedKeys);
-        $this->assertSame('value1', $this->storage->getItem('key1'));
-        $this->assertTrue($this->storage->hasItem('key2'));
+        self::assertSame(['key1'], $failedKeys);
+        self::assertSame('value1', $this->storage->getItem('key1'));
+        self::assertTrue($this->storage->hasItem('key2'));
     }
 
     public function testAddItemSetsTTL(): void
@@ -765,29 +758,29 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         $this->waitForFullSecond();
 
-        $this->assertTrue($this->storage->addItem('key', 'value'));
+        self::assertTrue($this->storage->addItem('key', 'value'));
 
         // wait until the item expired
         $wait = $ttl + $capabilities->getTtlPrecision();
         usleep((int) $wait * 2000000);
 
         if (! $capabilities->getUseRequestTime()) {
-            $this->assertFalse($this->storage->hasItem('key'));
+            self::assertFalse($this->storage->hasItem('key'));
         } else {
-            $this->assertTrue($this->storage->hasItem('key'));
+            self::assertTrue($this->storage->hasItem('key'));
         }
     }
 
     public function testReplaceExistingItem(): void
     {
-        $this->assertTrue($this->storage->setItem('key', 'value'));
-        $this->assertTrue($this->storage->replaceItem('key', 'anOtherValue'));
-        $this->assertEquals('anOtherValue', $this->storage->getItem('key'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->replaceItem('key', 'anOtherValue'));
+        self::assertEquals('anOtherValue', $this->storage->getItem('key'));
     }
 
     public function testReplaceItemReturnsFalseOnMissingItem(): void
     {
-        $this->assertFalse($this->storage->replaceItem('missingKey', 'value'));
+        self::assertFalse($this->storage->replaceItem('missingKey', 'value'));
     }
 
     public function testReplaceItemReturnsFalseIfNonWritable(): void
@@ -795,60 +788,60 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 'value');
         $this->options->setWritable(false);
 
-        $this->assertFalse($this->storage->replaceItem('key', 'newvalue'));
-        $this->assertEquals('value', $this->storage->getItem('key'));
+        self::assertFalse($this->storage->replaceItem('key', 'newvalue'));
+        self::assertEquals('value', $this->storage->getItem('key'));
     }
 
     public function testReplaceItemsReturnsFailedKeys(): void
     {
-        $this->assertTrue($this->storage->setItem('key1', 'value1'));
+        self::assertTrue($this->storage->setItem('key1', 'value1'));
 
         $failedKeys = $this->storage->replaceItems([
             'key1' => 'XYZ',
             'key2' => 'value2',
         ]);
 
-        $this->assertSame(['key2'], $failedKeys);
-        $this->assertSame('XYZ', $this->storage->getItem('key1'));
-        $this->assertFalse($this->storage->hasItem('key2'));
+        self::assertSame(['key2'], $failedKeys);
+        self::assertSame('XYZ', $this->storage->getItem('key1'));
+        self::assertFalse($this->storage->hasItem('key2'));
     }
 
     public function testRemoveItemReturnsFalseOnMissingItem(): void
     {
-        $this->assertFalse($this->storage->removeItem('missing'));
+        self::assertFalse($this->storage->removeItem('missing'));
     }
 
     public function testRemoveItemsReturnsMissingKeys(): void
     {
         $this->storage->setItem('key', 'value');
-        $this->assertSame(['missing'], $this->storage->removeItems(['key', 'missing']));
+        self::assertSame(['missing'], $this->storage->removeItems(['key', 'missing']));
     }
 
     public function testCheckAndSetItem(): void
     {
-        $this->assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
 
         $success  = null;
         $casToken = null;
-        $this->assertEquals('value', $this->storage->getItem('key', $success, $casToken));
-        $this->assertNotNull($casToken);
+        self::assertEquals('value', $this->storage->getItem('key', $success, $casToken));
+        self::assertNotNull($casToken);
 
-        $this->assertTrue($this->storage->checkAndSetItem($casToken, 'key', 'newValue'));
-        $this->assertFalse($this->storage->checkAndSetItem($casToken, 'key', 'failedValue'));
-        $this->assertEquals('newValue', $this->storage->getItem('key'));
+        self::assertTrue($this->storage->checkAndSetItem($casToken, 'key', 'newValue'));
+        self::assertFalse($this->storage->checkAndSetItem($casToken, 'key', 'failedValue'));
+        self::assertEquals('newValue', $this->storage->getItem('key'));
     }
 
     public function testIncrementItem(): void
     {
-        $this->assertTrue($this->storage->setItem('counter', 10));
-        $this->assertEquals(15, $this->storage->incrementItem('counter', 5));
-        $this->assertEquals(15, $this->storage->getItem('counter'));
+        self::assertTrue($this->storage->setItem('counter', 10));
+        self::assertEquals(15, $this->storage->incrementItem('counter', 5));
+        self::assertEquals(15, $this->storage->getItem('counter'));
     }
 
     public function testIncrementItemInitialValue(): void
     {
-        $this->assertEquals(5, $this->storage->incrementItem('counter', 5));
-        $this->assertEquals(5, $this->storage->getItem('counter'));
+        self::assertEquals(5, $this->storage->incrementItem('counter', 5));
+        self::assertEquals(5, $this->storage->getItem('counter'));
     }
 
     public function testIncrementItemReturnsFalseIfNonWritable(): void
@@ -856,8 +849,8 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 10);
         $this->options->setWritable(false);
 
-        $this->assertFalse($this->storage->incrementItem('key', 5));
-        $this->assertEquals(10, $this->storage->getItem('key'));
+        self::assertFalse($this->storage->incrementItem('key', 5));
+        self::assertEquals(10, $this->storage->getItem('key'));
     }
 
     /**
@@ -876,7 +869,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         ]);
         ksort($result);
 
-        $this->assertSame([
+        self::assertSame([
             'key1' => 20,
             'key2' => 31,
         ], $result);
@@ -884,7 +877,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
     public function testIncrementItemsResturnsKeyValuePairsOfWrittenItems(): void
     {
-        $this->assertTrue($this->storage->setItem('key1', 10));
+        self::assertTrue($this->storage->setItem('key1', 10));
 
         $result = $this->storage->incrementItems([
             'key1' => 10,
@@ -892,7 +885,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         ]);
         ksort($result);
 
-        $this->assertSame([
+        self::assertSame([
             'key1' => 20,
             'key2' => 10,
         ], $result);
@@ -903,21 +896,21 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 10);
         $this->options->setWritable(false);
 
-        $this->assertSame([], $this->storage->incrementItems(['key' => 5]));
-        $this->assertEquals(10, $this->storage->getItem('key'));
+        self::assertSame([], $this->storage->incrementItems(['key' => 5]));
+        self::assertEquals(10, $this->storage->getItem('key'));
     }
 
     public function testDecrementItem(): void
     {
-        $this->assertTrue($this->storage->setItem('counter', 30));
-        $this->assertEquals(25, $this->storage->decrementItem('counter', 5));
-        $this->assertEquals(25, $this->storage->getItem('counter'));
+        self::assertTrue($this->storage->setItem('counter', 30));
+        self::assertEquals(25, $this->storage->decrementItem('counter', 5));
+        self::assertEquals(25, $this->storage->getItem('counter'));
     }
 
     public function testDecrementItemInitialValue(): void
     {
-        $this->assertEquals(-5, $this->storage->decrementItem('counter', 5));
-        $this->assertEquals(-5, $this->storage->getItem('counter'));
+        self::assertEquals(-5, $this->storage->decrementItem('counter', 5));
+        self::assertEquals(-5, $this->storage->getItem('counter'));
     }
 
     public function testDecrementItemReturnsFalseIfNonWritable(): void
@@ -925,8 +918,8 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 10);
         $this->options->setWritable(false);
 
-        $this->assertFalse($this->storage->decrementItem('key', 5));
-        $this->assertEquals(10, $this->storage->getItem('key'));
+        self::assertFalse($this->storage->decrementItem('key', 5));
+        self::assertEquals(10, $this->storage->getItem('key'));
     }
 
     /**
@@ -945,7 +938,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         ]);
         ksort($result);
 
-        $this->assertSame([
+        self::assertSame([
             'key1' => 0,
             'key2' => 6,
         ], $result);
@@ -956,8 +949,8 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 10);
         $this->options->setWritable(false);
 
-        $this->assertSame([], $this->storage->decrementItems(['key' => 5]));
-        $this->assertEquals(10, $this->storage->getItem('key'));
+        self::assertSame([], $this->storage->decrementItems(['key' => 5]));
+        self::assertEquals(10, $this->storage->getItem('key'));
     }
 
     public function testTouchItem(): void
@@ -972,37 +965,37 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         $this->waitForFullSecond();
 
-        $this->assertTrue($this->storage->setItem('key', 'value'));
+        self::assertTrue($this->storage->setItem('key', 'value'));
 
         // sleep 1 times before expire to touch the item
         usleep((int) $capabilities->getTtlPrecision() * 1000000);
-        $this->assertTrue($this->storage->touchItem('key'));
+        self::assertTrue($this->storage->touchItem('key'));
 
         usleep((int) $capabilities->getTtlPrecision() * 1000000);
-        $this->assertTrue($this->storage->hasItem('key'));
+        self::assertTrue($this->storage->hasItem('key'));
 
         if (! $capabilities->getUseRequestTime()) {
             usleep((int) $capabilities->getTtlPrecision() * 2000000);
-            $this->assertFalse($this->storage->hasItem('key'));
+            self::assertFalse($this->storage->hasItem('key'));
         }
     }
 
     public function testTouchItemReturnsFalseOnMissingItem(): void
     {
-        $this->assertFalse($this->storage->touchItem('missing'));
+        self::assertFalse($this->storage->touchItem('missing'));
     }
 
     public function testTouchItemReturnsFalseIfNonWritable(): void
     {
         $this->options->setWritable(false);
 
-        $this->assertFalse($this->storage->touchItem('key'));
+        self::assertFalse($this->storage->touchItem('key'));
     }
 
     public function testTouchItemsReturnsGivenKeysIfNonWritable(): void
     {
         $this->options->setWritable(false);
-        $this->assertSame(['key'], $this->storage->touchItems(['key']));
+        self::assertSame(['key'], $this->storage->touchItems(['key']));
     }
 
     public function testOptimize(): void
@@ -1011,7 +1004,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
             $this->markTestSkipped("Storage doesn't implement OptimizableInterface");
         }
 
-        $this->assertTrue($this->storage->optimize());
+        self::assertTrue($this->storage->optimize());
     }
 
     public function testIterator(): void
@@ -1024,26 +1017,28 @@ abstract class AbstractCommonAdapterTest extends TestCase
             'key1' => 'value1',
             'key2' => 'value2',
         ];
-        $this->assertSame([], $this->storage->setItems($items));
+        self::assertSame([], $this->storage->setItems($items));
 
         // check iterator aggregate
         $iterator = $this->storage->getIterator();
-        $this->assertInstanceOf(IteratorInterface::class, $iterator);
-        $this->assertSame(IteratorInterface::CURRENT_AS_KEY, $iterator->getMode());
+        self::assertInstanceOf(IteratorInterface::class, $iterator);
+        self::assertSame(IteratorInterface::CURRENT_AS_KEY, $iterator->getMode());
 
         // check mode CURRENT_AS_KEY
         $iterator = $this->storage->getIterator();
+        self::assertInstanceOf(IteratorInterface::class, $iterator);
         $iterator->setMode(IteratorInterface::CURRENT_AS_KEY);
         $keys = iterator_to_array($iterator, false);
         sort($keys);
-        $this->assertSame(array_keys($items), $keys);
+        self::assertSame(array_keys($items), $keys);
 
         // check mode CURRENT_AS_VALUE
         $iterator = $this->storage->getIterator();
+        self::assertInstanceOf(IteratorInterface::class, $iterator);
         $iterator->setMode(IteratorInterface::CURRENT_AS_VALUE);
         $result = iterator_to_array($iterator, true);
         ksort($result);
-        $this->assertSame($items, $result);
+        self::assertSame($items, $result);
     }
 
     public function testFlush(): void
@@ -1052,14 +1047,14 @@ abstract class AbstractCommonAdapterTest extends TestCase
             $this->markTestSkipped("Storage doesn't implement OptimizableInterface");
         }
 
-        $this->assertSame([], $this->storage->setItems([
+        self::assertSame([], $this->storage->setItems([
             'key1' => 'value1',
             'key2' => 'value2',
         ]));
 
-        $this->assertTrue($this->storage->flush());
-        $this->assertFalse($this->storage->hasItem('key1'));
-        $this->assertFalse($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->flush());
+        self::assertFalse($this->storage->hasItem('key1'));
+        self::assertFalse($this->storage->hasItem('key2'));
     }
 
     public function testClearByPrefix(): void
@@ -1068,16 +1063,16 @@ abstract class AbstractCommonAdapterTest extends TestCase
             $this->markTestSkipped("Storage doesn't implement ClearByPrefixInterface");
         }
 
-        $this->assertSame([], $this->storage->setItems([
+        self::assertSame([], $this->storage->setItems([
             'key1' => 'value1',
             'key2' => 'value2',
             'test' => 'value',
         ]));
 
-        $this->assertTrue($this->storage->clearByPrefix('key'));
-        $this->assertFalse($this->storage->hasItem('key1'));
-        $this->assertFalse($this->storage->hasItem('key2'));
-        $this->assertTrue($this->storage->hasItem('test'));
+        self::assertTrue($this->storage->clearByPrefix('key'));
+        self::assertFalse($this->storage->hasItem('key1'));
+        self::assertFalse($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->hasItem('test'));
     }
 
     public function testClearByPrefixThrowsInvalidArgumentExceptionOnEmptyPrefix(): void
@@ -1098,30 +1093,30 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         // write 2 items of 2 different namespaces
         $this->options->setNamespace('ns1');
-        $this->assertTrue($this->storage->setItem('key1', 'value1'));
+        self::assertTrue($this->storage->setItem('key1', 'value1'));
         $this->options->setNamespace('ns2');
-        $this->assertTrue($this->storage->setItem('key2', 'value2'));
+        self::assertTrue($this->storage->setItem('key2', 'value2'));
 
         // clear unknown namespace should return true but clear nothing
-        $this->assertTrue($this->storage->clearByNamespace('unknown'));
+        self::assertTrue($this->storage->clearByNamespace('unknown'));
         $this->options->setNamespace('ns1');
-        $this->assertTrue($this->storage->hasItem('key1'));
+        self::assertTrue($this->storage->hasItem('key1'));
         $this->options->setNamespace('ns2');
-        $this->assertTrue($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->hasItem('key2'));
 
         // clear "ns1"
-        $this->assertTrue($this->storage->clearByNamespace('ns1'));
+        self::assertTrue($this->storage->clearByNamespace('ns1'));
         $this->options->setNamespace('ns1');
-        $this->assertFalse($this->storage->hasItem('key1'));
+        self::assertFalse($this->storage->hasItem('key1'));
         $this->options->setNamespace('ns2');
-        $this->assertTrue($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->hasItem('key2'));
 
         // clear "ns2"
-        $this->assertTrue($this->storage->clearByNamespace('ns2'));
+        self::assertTrue($this->storage->clearByNamespace('ns2'));
         $this->options->setNamespace('ns1');
-        $this->assertFalse($this->storage->hasItem('key1'));
+        self::assertFalse($this->storage->hasItem('key1'));
         $this->options->setNamespace('ns2');
-        $this->assertFalse($this->storage->hasItem('key2'));
+        self::assertFalse($this->storage->hasItem('key2'));
     }
 
     public function testClearByNamespaceThrowsInvalidArgumentExceptionOnEmptyNamespace(): void
@@ -1146,23 +1141,23 @@ abstract class AbstractCommonAdapterTest extends TestCase
 
         $this->waitForFullSecond();
 
-        $this->assertTrue($this->storage->setItem('key1', 'value1'));
+        self::assertTrue($this->storage->setItem('key1', 'value1'));
 
         // wait until the first item expired
         $wait = $ttl + $capabilities->getTtlPrecision();
         usleep((int) $wait * 2000000);
 
-        $this->assertTrue($this->storage->setItem('key2', 'value2'));
+        self::assertTrue($this->storage->setItem('key2', 'value2'));
 
-        $this->assertTrue($this->storage->clearExpired());
+        self::assertTrue($this->storage->clearExpired());
 
         if ($capabilities->getUseRequestTime()) {
-            $this->assertTrue($this->storage->hasItem('key1'));
+            self::assertTrue($this->storage->hasItem('key1'));
         } else {
-            $this->assertFalse($this->storage->hasItem('key1', ['ttl' => 0]));
+            self::assertFalse($this->storage->hasItem('key1'));
         }
 
-        $this->assertTrue($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->hasItem('key2'));
     }
 
     public function testTaggable(): void
@@ -1172,40 +1167,40 @@ abstract class AbstractCommonAdapterTest extends TestCase
         }
 
         // store 3 items and register the current default namespace
-        $this->assertSame([], $this->storage->setItems([
+        self::assertSame([], $this->storage->setItems([
             'key1' => 'value1',
             'key2' => 'value2',
             'key3' => 'value3',
         ]));
 
-        $this->assertTrue($this->storage->setTags('key1', ['tag1a', 'tag1b']));
-        $this->assertTrue($this->storage->setTags('key2', ['tag2a', 'tag2b']));
-        $this->assertTrue($this->storage->setTags('key3', ['tag3a', 'tag3b']));
-        $this->assertFalse($this->storage->setTags('missing', ['tag']));
+        self::assertTrue($this->storage->setTags('key1', ['tag1a', 'tag1b']));
+        self::assertTrue($this->storage->setTags('key2', ['tag2a', 'tag2b']));
+        self::assertTrue($this->storage->setTags('key3', ['tag3a', 'tag3b']));
+        self::assertFalse($this->storage->setTags('missing', ['tag']));
 
         // return tags
         $tags = $this->storage->getTags('key1');
-        $this->assertIsArray($tags);
+        self::assertIsArray($tags);
         sort($tags);
-        $this->assertSame(['tag1a', 'tag1b'], $tags);
+        self::assertSame(['tag1a', 'tag1b'], $tags);
 
         // this should remove nothing
-        $this->assertTrue($this->storage->clearByTags(['tag1a', 'tag2a']));
-        $this->assertTrue($this->storage->hasItem('key1'));
-        $this->assertTrue($this->storage->hasItem('key2'));
-        $this->assertTrue($this->storage->hasItem('key3'));
+        self::assertTrue($this->storage->clearByTags(['tag1a', 'tag2a']));
+        self::assertTrue($this->storage->hasItem('key1'));
+        self::assertTrue($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->hasItem('key3'));
 
         // this should remove key1 and key2
-        $this->assertTrue($this->storage->clearByTags(['tag1a', 'tag2b'], true));
-        $this->assertFalse($this->storage->hasItem('key1'));
-        $this->assertFalse($this->storage->hasItem('key2'));
-        $this->assertTrue($this->storage->hasItem('key3'));
+        self::assertTrue($this->storage->clearByTags(['tag1a', 'tag2b'], true));
+        self::assertFalse($this->storage->hasItem('key1'));
+        self::assertFalse($this->storage->hasItem('key2'));
+        self::assertTrue($this->storage->hasItem('key3'));
 
         // this should remove key3
-        $this->assertTrue($this->storage->clearByTags(['tag3a', 'tag3b'], true));
-        $this->assertFalse($this->storage->hasItem('key1'));
-        $this->assertFalse($this->storage->hasItem('key2'));
-        $this->assertFalse($this->storage->hasItem('key3'));
+        self::assertTrue($this->storage->clearByTags(['tag3a', 'tag3b'], true));
+        self::assertFalse($this->storage->hasItem('key1'));
+        self::assertFalse($this->storage->hasItem('key2'));
+        self::assertFalse($this->storage->hasItem('key3'));
     }
 
     /**
@@ -1217,9 +1212,9 @@ abstract class AbstractCommonAdapterTest extends TestCase
             $this->markTestSkipped("Storage doesn't implement TaggableInterface");
         }
 
-        $this->assertFalse($this->storage->setTags('unknown', ['no']));
-        $this->assertFalse($this->storage->getTags('unknown'));
-        $this->assertTrue($this->storage->clearByTags(['unknown']));
+        self::assertFalse($this->storage->setTags('unknown', ['no']));
+        self::assertFalse($this->storage->getTags('unknown'));
+        self::assertTrue($this->storage->clearByTags(['unknown']));
     }
 
     public function testGetTotalSpace(): void
@@ -1229,11 +1224,11 @@ abstract class AbstractCommonAdapterTest extends TestCase
         }
 
         $totalSpace = $this->storage->getTotalSpace();
-        $this->assertGreaterThanOrEqual(0, $totalSpace);
+        self::assertGreaterThanOrEqual(0, $totalSpace);
 
         if ($this->storage instanceof AvailableSpaceCapableInterface) {
             $availableSpace = $this->storage->getAvailableSpace();
-            $this->assertGreaterThanOrEqual($availableSpace, $totalSpace);
+            self::assertGreaterThanOrEqual($availableSpace, $totalSpace);
         }
     }
 
@@ -1244,11 +1239,11 @@ abstract class AbstractCommonAdapterTest extends TestCase
         }
 
         $availableSpace = $this->storage->getAvailableSpace();
-        $this->assertGreaterThanOrEqual(0, $availableSpace);
+        self::assertGreaterThanOrEqual(0, $availableSpace);
 
         if ($this->storage instanceof TotalSpaceCapableInterface) {
             $totalSpace = $this->storage->getTotalSpace();
-            $this->assertLessThanOrEqual($totalSpace, $availableSpace);
+            self::assertLessThanOrEqual($totalSpace, $availableSpace);
         }
     }
 
