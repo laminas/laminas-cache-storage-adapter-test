@@ -22,12 +22,7 @@ use const JSON_THROW_ON_ERROR;
  */
 trait LaminasComponentInstallerIntegrationTestTrait
 {
-    /**
-     * Returns the config provider class-name of the cache component.
-     *
-     * @psalm-return class-string
-     */
-    abstract protected function getConfigProviderClassName(): string;
+    use LaminasConfigAggregatorConfigProviderProviderTrait;
 
     /**
      * @psalm-return non-empty-string
