@@ -878,7 +878,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         ], $result);
     }
 
-    public function testIncrementItemsResturnsKeyValuePairsOfWrittenItems(): void
+    public function testIncrementItemsReturnsKeyValuePairsOfWrittenItems(): void
     {
         self::assertTrue($this->storage->setItem('key1', 10));
 
