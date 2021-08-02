@@ -185,6 +185,9 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $capabilities = $this->storage->getCapabilities();
         $metadata     = $capabilities->getSupportedMetadata();
+        if ($metadata === []) {
+            self::markTestSkipped('Adapter does not support any metadata.');
+        }
 
         foreach ($metadata as $property) {
             self::assertIsString($property);
