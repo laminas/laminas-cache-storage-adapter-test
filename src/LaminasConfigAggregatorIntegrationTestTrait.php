@@ -47,7 +47,7 @@ trait LaminasConfigAggregatorIntegrationTestTrait
             sprintf('There must be exactly one delegator factory for the %s', AdapterPluginManager::class)
         );
         $delegator = reset($delegatorsForAdapterPluginManager);
-        self::assertString($delegator, 'The delegator should be a class-string pointing to the delegator class.');
+        self::assertIsString($delegator, 'The delegator should be a class-string pointing to the delegator class.');
         self::assertTrue(class_exists($delegator), sprintf(
             'The configured delegator "%s" is not a valid class name or it could not be autoloaded.',
             $delegator
