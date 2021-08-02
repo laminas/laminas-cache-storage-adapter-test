@@ -1,0 +1,8 @@
+{
+    "extra": {
+        "laminas": {
+            "config-provider": "LaminasTestTest\\Cache\\Storage\\Adapter\\TestAsset\\ConfigProvider",
+            "module": "LaminasTestTest\\Cache\\Storage\\Adapter\\TestAsset"
+        }
+    }
+}
