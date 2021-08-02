@@ -56,7 +56,11 @@ trait LaminasConfigAggregatorIntegrationTestTrait
         $instance = new $delegator();
         self::assertIsCallable($instance, 'The configured delegator must be callable.');
 
-        $container     = $this->createMock(ContainerInterface::class);
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->expects(self::never())
+            ->method(self::anything());
+
         $pluginManager = new AdapterPluginManager($container);
         $callback      = static function () use ($pluginManager): AdapterPluginManager {
             return $pluginManager;
