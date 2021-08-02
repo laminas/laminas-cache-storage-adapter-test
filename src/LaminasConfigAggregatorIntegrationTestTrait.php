@@ -62,7 +62,7 @@ trait LaminasConfigAggregatorIntegrationTestTrait
             return $pluginManager;
         };
 
-        $delegatedPluginManager = $delegator($container, AdapterPluginManager::class, $callback);
+        $delegatedPluginManager = $instance($container, AdapterPluginManager::class, $callback);
         self::assertSame($pluginManager, $delegatedPluginManager);
     }
 }
