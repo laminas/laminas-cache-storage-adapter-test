@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Cache\Storage\Adapter;
 
 use JsonException;
+use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 use function class_exists;
