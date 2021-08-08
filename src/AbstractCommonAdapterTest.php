@@ -39,12 +39,22 @@ use function time;
 use function ucwords;
 use function usleep;
 
+/**
+ * @template TStorage of StorageInterface
+ * @template TOptions of AdapterOptions
+ */
 abstract class AbstractCommonAdapterTest extends TestCase
 {
-    /** @var StorageInterface */
+    /**
+     * @var StorageInterface
+     * @psalm-var TStorage
+     */
     protected $storage;
 
-    /** @var AdapterOptions */
+    /**
+     * @var AdapterOptions
+     * @psalm-var TOptions
+     */
     protected $options;
 
     /**
