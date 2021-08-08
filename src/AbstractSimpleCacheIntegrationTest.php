@@ -6,6 +6,7 @@ namespace LaminasTest\Cache\Storage\Adapter;
 
 use Cache\IntegrationTests\SimpleCacheTest;
 use Laminas\Cache\Psr\SimpleCache\SimpleCacheDecorator;
+use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\StorageInterface;
 use Psr\SimpleCache\CacheInterface;
 
@@ -15,8 +16,11 @@ use function get_class;
 
 abstract class AbstractSimpleCacheIntegrationTest extends SimpleCacheTest
 {
-    /** @var string */
+    /** @var string|null  */
     private $tz;
+
+    /** @var StorageInterface|null */
+    private $storage;
 
     protected function setUp(): void
     {
@@ -29,7 +33,13 @@ abstract class AbstractSimpleCacheIntegrationTest extends SimpleCacheTest
     protected function tearDown(): void
     {
         parent::tearDown();
-        date_default_timezone_set($this->tz);
+        if ($this->tz) {
+            date_default_timezone_set($this->tz);
+        }
+
+        if ($this->storage instanceof FlushableInterface) {
+            $this->storage->flush();
+        }
     }
 
     /** @psalm-return class-string<StorageInterface> */
@@ -42,6 +52,7 @@ abstract class AbstractSimpleCacheIntegrationTest extends SimpleCacheTest
 
     public function createSimpleCache(): CacheInterface
     {
-        return new SimpleCacheDecorator($this->createStorage());
+        $this->storage = $this->createStorage();
+        return new SimpleCacheDecorator($this->storage);
     }
 }
