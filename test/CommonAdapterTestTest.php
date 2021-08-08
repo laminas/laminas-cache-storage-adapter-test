@@ -27,4 +27,9 @@ final class CommonAdapterTestTest extends AbstractCommonAdapterTest
     {
         return [];
     }
+
+    public function testCanStoreValuesWithCacheKeysUpToTheMaximumKeyLengthLimit(): void
+    {
+        self::markTestSkipped();
+    }
 }
