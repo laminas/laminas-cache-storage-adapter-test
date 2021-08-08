@@ -14,18 +14,26 @@ use ReflectionObject;
 
 use function func_get_args;
 
+/**
+ * @template TOptions of AdapterOptions
+ */
 abstract class AbstractAdapterOptionsTest extends TestCase
 {
-    /** @var AbstractAdapter */
-    protected $storage;
-
-    /** @var AdapterOptions */
+    /**
+     * @var AdapterOptions
+     * @psalm-var TOptions
+     */
     protected $options;
 
     public function setUp(): void
     {
-        $this->options = new AdapterOptions();
+        $this->options = $this->createAdapterOptions();
     }
+
+    /**
+     * @psalm-return TOptions
+     */
+    abstract protected function createAdapterOptions(): AdapterOptions;
 
     public function testKeyPattern(): void
     {
