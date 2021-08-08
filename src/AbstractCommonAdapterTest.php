@@ -24,6 +24,7 @@ use stdClass;
 
 use function array_keys;
 use function array_merge;
+use function bin2hex;
 use function count;
 use function fopen;
 use function is_string;
@@ -31,6 +32,7 @@ use function iterator_to_array;
 use function ksort;
 use function method_exists;
 use function microtime;
+use function random_bytes;
 use function sort;
 use function str_replace;
 use function time;
@@ -1280,5 +1282,23 @@ abstract class AbstractCommonAdapterTest extends TestCase
     {
         $interval = (microtime(true) - time()) * 1000000;
         usleep((int) $interval);
+    }
+
+    public function testCanStoreValuesWithCacheKeysUpToTheMaximumKeyLengthLimit(): void
+    {
+        $capabilities     = $this->storage->getCapabilities();
+        $maximumKeyLength = $capabilities->getMaxKeyLength();
+        if ($maximumKeyLength > 1024) {
+            self::markTestSkipped('Maximum cache key length is bigger than 1M.');
+        } elseif ($maximumKeyLength === Capabilities::UNKNOWN_KEY_LENGTH) {
+            self::fail('Capabilities do not provide key length.');
+        } elseif ($maximumKeyLength === Capabilities::UNLIMITED_KEY_LENGTH) {
+            self::markTestSkipped('Maximum cache key length is unlimited.');
+        }
+
+        $key   = bin2hex(random_bytes((int) ($maximumKeyLength / 2)));
+        $value = 'whatever';
+        self::assertTrue($this->storage->setItem($key, $value));
+        self::assertSame($value, $this->storage->getItem($key));
     }
 }
