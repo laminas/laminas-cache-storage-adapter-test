@@ -94,6 +94,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
             ErrorHandler::stop();
             self::fail('ErrorHandler not stopped');
         }
+
+        if ($this->storage instanceof FlushableInterface) {
+            $this->storage->flush();
+        }
     }
 
     public function testOptionNamesValid(): void

@@ -6,6 +6,7 @@ namespace LaminasTest\Cache\Storage\Adapter;
 
 use Cache\IntegrationTests\CachePoolTest;
 use Laminas\Cache\Psr\CacheItemPool\CacheItemPoolDecorator;
+use Laminas\Cache\Storage\FlushableInterface;
 use Laminas\Cache\Storage\StorageInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -16,8 +17,11 @@ use function sprintf;
 
 abstract class AbstractCacheItemPoolIntegrationTest extends CachePoolTest
 {
-    /** @var string */
+    /** @var string|null */
     private $tz;
+
+    /** @var StorageInterface|null */
+    private $storage;
 
     protected function setUp(): void
     {
@@ -41,7 +45,14 @@ abstract class AbstractCacheItemPoolIntegrationTest extends CachePoolTest
 
     protected function tearDown(): void
     {
-        date_default_timezone_set($this->tz);
+        if ($this->tz) {
+            date_default_timezone_set($this->tz);
+        }
+
+        if ($this->storage instanceof FlushableInterface) {
+            $this->storage->flush();
+        }
+
         parent::tearDown();
     }
 
@@ -55,6 +66,7 @@ abstract class AbstractCacheItemPoolIntegrationTest extends CachePoolTest
 
     public function createCachePool(): CacheItemPoolInterface
     {
-        return new CacheItemPoolDecorator($this->createStorage());
+        $this->storage = $this->createStorage();
+        return new CacheItemPoolDecorator($this->storage);
     }
 }
