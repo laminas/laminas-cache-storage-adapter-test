@@ -25,9 +25,10 @@ abstract class AbstractAdapterOptionsTest extends TestCase
      */
     protected $options;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->options = $this->createAdapterOptions();
+        parent::setUp();
     }
 
     /**
