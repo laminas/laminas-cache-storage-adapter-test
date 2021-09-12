@@ -25,6 +25,9 @@ abstract class AbstractAdapterOptionsTest extends TestCase
      */
     protected $options;
 
+    /** @var string */
+    protected $keyPattern = '';
+
     protected function setUp(): void
     {
         $this->options = $this->createAdapterOptions();
@@ -39,7 +42,7 @@ abstract class AbstractAdapterOptionsTest extends TestCase
     public function testKeyPattern(): void
     {
         // test default value
-        self::assertSame('', $this->options->getKeyPattern());
+        self::assertSame($this->keyPattern, $this->options->getKeyPattern());
 
         self::assertSame($this->options, $this->options->setKeyPattern('/./'));
         self::assertSame('/./', $this->options->getKeyPattern());
