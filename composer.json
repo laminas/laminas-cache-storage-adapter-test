@@ -12,7 +12,7 @@
         "cache/integration-tests": "^0.17",
         "container-interop/container-interop": "^1.2",
         "laminas/laminas-cache": "^3.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5.9"
     },
     "require-dev": {
         "laminas/laminas-cache-storage-adapter-memory": "^1.1",
