@@ -24,6 +24,7 @@ use stdClass;
 
 use function array_keys;
 use function array_merge;
+use function assert;
 use function bin2hex;
 use function count;
 use function fopen;
@@ -264,8 +265,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertTrue($this->storage->setItem('key', 'value'));
 
         // wait until the item expired
-        $wait = $ttl + $capabilities->getTtlPrecision();
-        usleep((int) $wait * 2000000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000000);
+        self::assertGreaterThanOrEqual(0, $wait);
+        assert($wait >= 0);
+        usleep($wait);
 
         if (! $capabilities->getUseRequestTime()) {
             self::assertFalse($this->storage->hasItem('key'));
@@ -341,8 +344,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 'value');
 
         // wait until expired
-        $wait = $ttl + $capabilities->getTtlPrecision();
-        usleep((int) $wait * 2000000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000000);
+        self::assertGreaterThanOrEqual(0, $wait);
+        assert($wait >= 0);
+        usleep($wait);
 
         self::assertNull($this->storage->getItem('key'));
     }
@@ -592,8 +597,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->storage->setItem('key', 'value');
 
         // wait until expired
-        $wait = $ttl + $capabilities->getTtlPrecision();
-        usleep((int) $wait * 2000000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000000);
+        self::assertGreaterThanOrEqual(0, $wait);
+        assert($wait >= 0);
+        usleep($wait);
 
         if ($capabilities->getUseRequestTime()) {
             // Can't test much more if the request time will be used
@@ -642,8 +649,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertSame([], $this->storage->setItems($itemsLow));
 
         // wait until expired
-        $wait = $ttl + $capabilities->getTtlPrecision();
-        usleep((int) $wait * 2000000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000000);
+        self::assertGreaterThanOrEqual(0, $wait);
+        assert($wait >= 0);
+        usleep($wait);
 
         $rs = $this->storage->getItems(array_keys($items));
         ksort($rs); // make comparable
@@ -674,6 +683,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
                 self::assertEquals($itemsHigh, $rs);
             } else {
                 $itemsExpected = array_merge($itemsLow, $itemsHigh);
+                /** @psalm-suppress RedundantFunctionCall Suppressing here to avoid issues between different PHP versions */
                 ksort($itemsExpected); // make comparable
                 self::assertEquals($itemsExpected, $rs);
             }
@@ -780,8 +790,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertTrue($this->storage->addItem('key', 'value'));
 
         // wait until the item expired
-        $wait = $ttl + $capabilities->getTtlPrecision();
-        usleep((int) $wait * 2000000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000000);
+        self::assertGreaterThanOrEqual(0, $wait);
+        assert($wait >= 0);
+        usleep($wait);
 
         if (! $capabilities->getUseRequestTime()) {
             self::assertFalse($this->storage->hasItem('key'));
@@ -983,18 +995,24 @@ abstract class AbstractCommonAdapterTest extends TestCase
         $this->options->setTtl(2 * $capabilities->getTtlPrecision());
 
         $this->waitForFullSecond();
+        $waitInitial = (int) ($capabilities->getTtlPrecision() * 1000000);
+        self::assertGreaterThanOrEqual(0, $waitInitial);
+        assert($waitInitial >= 0);
 
         self::assertTrue($this->storage->setItem('key', 'value'));
 
         // sleep 1 times before expire to touch the item
-        usleep((int) $capabilities->getTtlPrecision() * 1000000);
+        usleep($waitInitial);
         self::assertTrue($this->storage->touchItem('key'));
 
-        usleep((int) $capabilities->getTtlPrecision() * 1000000);
+        usleep($waitInitial);
         self::assertTrue($this->storage->hasItem('key'));
 
         if (! $capabilities->getUseRequestTime()) {
-            usleep((int) $capabilities->getTtlPrecision() * 2000000);
+            $waitExtended = (int) ($capabilities->getTtlPrecision() * 2000000);
+            self::assertGreaterThanOrEqual(0, $waitExtended);
+            assert($waitExtended >= 0);
+            usleep($waitExtended);
             self::assertFalse($this->storage->hasItem('key'));
         }
     }
@@ -1163,8 +1181,10 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertTrue($this->storage->setItem('key1', 'value1'));
 
         // wait until the first item expired
-        $wait = $ttl + $capabilities->getTtlPrecision();
-        usleep((int) $wait * 2000000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000);
+        self::assertGreaterThanOrEqual(0, $wait);
+        assert($wait >= 0);
+        usleep($wait);
 
         self::assertTrue($this->storage->setItem('key2', 'value2'));
 
@@ -1274,8 +1294,9 @@ abstract class AbstractCommonAdapterTest extends TestCase
      */
     protected function waitForFullSecond(): void
     {
-        $interval = (microtime(true) - time()) * 1000000;
-        usleep((int) $interval);
+        $interval = (int) (microtime(true) - time()) * 1000000;
+        assert($interval >= 0);
+        usleep($interval);
     }
 
     public function testCanStoreValuesWithCacheKeysUpToTheMaximumKeyLengthLimit(): void
@@ -1288,9 +1309,13 @@ abstract class AbstractCommonAdapterTest extends TestCase
             self::fail('Capabilities do not provide key length.');
         } elseif ($maximumKeyLength === Capabilities::UNLIMITED_KEY_LENGTH) {
             self::markTestSkipped('Maximum cache key length is unlimited.');
+        } elseif ($maximumKeyLength === 1) {
+            self::markTestSkipped('The maximum key length of the storage adapter is 1.');
         }
 
-        $key   = bin2hex(random_bytes((int) ($maximumKeyLength / 2)));
+        $length = (int) ($maximumKeyLength / 2);
+        assert($length > 0);
+        $key   = bin2hex(random_bytes($length));
         $value = 'whatever';
         self::assertTrue($this->storage->setItem($key, $value));
         self::assertSame($value, $this->storage->getItem($key));
