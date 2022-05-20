@@ -683,6 +683,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
                 self::assertEquals($itemsHigh, $rs);
             } else {
                 $itemsExpected = array_merge($itemsLow, $itemsHigh);
+                /** @psalm-suppress RedundantFunctionCall Suppressing here to avoid issues between different PHP versions */
                 ksort($itemsExpected); // make comparable
                 self::assertEquals($itemsExpected, $rs);
             }
