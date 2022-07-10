@@ -13,7 +13,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use function date_default_timezone_get;
 use function date_default_timezone_set;
 use function get_class;
-use function sprintf;
 
 abstract class AbstractCacheItemPoolIntegrationTest extends CachePoolTest
 {
@@ -25,18 +24,6 @@ abstract class AbstractCacheItemPoolIntegrationTest extends CachePoolTest
 
     protected function setUp(): void
     {
-        $deferredSkippedMessage = sprintf(
-            '%s storage doesn\'t support driver deferred',
-            $this->getStorageAdapterClassName(),
-        );
-
-        /**
-         * @link           https://github.com/php-cache/integration-tests/issues/115
-         *
-         * @psalm-suppress MixedArrayAssignment
-         */
-        $this->skippedTests['testHasItemReturnsFalseWhenDeferredItemIsExpired'] = $deferredSkippedMessage;
-
         parent::setUp();
         // set non-UTC timezone
         $this->tz = date_default_timezone_get();
