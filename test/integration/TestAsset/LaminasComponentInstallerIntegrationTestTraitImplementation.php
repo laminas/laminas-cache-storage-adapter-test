@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTestTest\Cache\Storage\Adapter\TestAsset;
 
 use LaminasTest\Cache\Storage\Adapter\LaminasComponentInstallerIntegrationTestTrait;
+use LaminasTestTest\Cache\Storage\Adapter\unit\TestAsset\ConfigProvider;
 use PHPUnit\Framework\TestCase;
 
 final class LaminasComponentInstallerIntegrationTestTraitImplementation extends TestCase

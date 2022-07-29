@@ -11,7 +11,8 @@
         <ignoreFiles>
             <directory name="docs"/>
             <directory name="vendor"/>
-            <directory name="test/TestAsset"/>
+            <directory name="test/unit/TestAsset"/>
+            <directory name="test/integration/TestAsset"/>
         </ignoreFiles>
     </projectFiles>
 

@@ -40,7 +40,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LaminasTestTest\\Cache\\Storage\\Adapter\\": "test/"
+            "LaminasTestTest\\Cache\\Storage\\Adapter\\": [
+                "test/unit",
+                "test/integration"
+            ]
         }
     },
     "minimum-stability": "dev",
