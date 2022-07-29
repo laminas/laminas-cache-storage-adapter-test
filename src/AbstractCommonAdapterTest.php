@@ -1181,7 +1181,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertTrue($this->storage->setItem('key1', 'value1'));
 
         // wait until the first item expired
-        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000);
+        $wait = (int) ($ttl + $capabilities->getTtlPrecision() * 2000000);
         self::assertGreaterThanOrEqual(0, $wait);
         assert($wait >= 0);
         usleep($wait);
