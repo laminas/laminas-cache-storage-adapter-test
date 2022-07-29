@@ -12,6 +12,7 @@ final class CacheItemPoolIntegrationTestTest extends AbstractCacheItemPoolIntegr
 {
     protected function setUp(): void
     {
+        /** @psalm-suppress MixedArrayAssignment `cache/integration-tests` type annotation is not appropriate here. */
         $this->skippedTests['testHasItemReturnsFalseWhenDeferredItemIsExpired']
             = 'Skipping since laminas-cache does not yet handle `expiresAt` properly.'
             . ' See https://github.com/laminas/laminas-cache/pull/199';
