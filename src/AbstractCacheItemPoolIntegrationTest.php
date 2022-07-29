@@ -471,7 +471,7 @@ abstract class AbstractCacheItemPoolIntegrationTest extends TestCase
 
         $item = $this->cache->getItem('key');
         $item->set('4711');
-        $item->expiresAt(DateTimeImmutable::createFromFormat('U', time() - 1));
+        $item->expiresAt(DateTimeImmutable::createFromFormat('U', (string) (time() - 1)));
         $this->cache->saveDeferred($item);
 
         self::assertFalse(
