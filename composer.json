@@ -15,6 +15,7 @@
         "phpunit/phpunit": "^9.5.20"
     },
     "require-dev": {
+        "laminas/laminas-cache-storage-adapter-apcu": "^2.0",
         "laminas/laminas-cache-storage-adapter-memory": "^1.1",
         "laminas/laminas-coding-standard": "~2.3.0",
         "psalm/plugin-phpunit": "^0.17.0",
