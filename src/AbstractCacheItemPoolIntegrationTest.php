@@ -65,6 +65,9 @@ abstract class AbstractCacheItemPoolIntegrationTest extends TestCase
 
         if ($this->storage instanceof FlushableInterface) {
             $this->storage->flush();
+        }
+
+        if ($this->cache !== null) {
             $this->cache->clear();
         }
 
