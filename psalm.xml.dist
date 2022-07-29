@@ -4,17 +4,52 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedPsalmSuppress="true"
 >
     <projectFiles>
         <directory name="src"/>
         <directory name="test"/>
         <ignoreFiles>
-            <directory name="docs"/>
             <directory name="vendor"/>
             <directory name="test/unit/TestAsset"/>
             <directory name="test/integration/TestAsset"/>
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <RedundantConditionGivenDocblockType>
+            <errorLevel type="suppress">
+                <file name="src/AbstractSimpleCacheIntegrationTest.php"/>
+                <file name="src/AbstractCacheItemPoolIntegrationTest.php"/>
+            </errorLevel>
+        </RedundantConditionGivenDocblockType>
+        <MixedArgument>
+            <errorLevel type="suppress">
+                <file name="src/AbstractSimpleCacheIntegrationTest.php"/>
+                <file name="src/AbstractCacheItemPoolIntegrationTest.php"/>
+            </errorLevel>
+        </MixedArgument>
+        <MixedArgumentTypeCoercion>
+            <errorLevel type="suppress">
+                <file name="src/AbstractCacheItemPoolIntegrationTest.php"/>
+            </errorLevel>
+        </MixedArgumentTypeCoercion>
+        <MixedAssignment>
+            <errorLevel type="suppress">
+                <file name="src/AbstractSimpleCacheIntegrationTest.php"/>
+            </errorLevel>
+        </MixedAssignment>
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <file name="src/AbstractSimpleCacheIntegrationTest.php"/>
+                <file name="src/AbstractCacheItemPoolIntegrationTest.php"/>
+            </errorLevel>
+        </InvalidArgument>
+        <PossiblyNullReference>
+            <errorLevel type="suppress">
+                <file name="src/AbstractCacheItemPoolIntegrationTest.php"/>
+            </errorLevel>
+        </PossiblyNullReference>
+    </issueHandlers>
 
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
