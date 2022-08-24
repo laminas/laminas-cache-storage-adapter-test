@@ -18,7 +18,7 @@
     "require-dev": {
         "laminas/laminas-cache-storage-adapter-apcu": "^2.0",
         "laminas/laminas-cache-storage-adapter-memory": "^2.0",
-        "laminas/laminas-coding-standard": "~2.3.0",
+        "laminas/laminas-coding-standard": "~2.4.0",
         "psalm/plugin-phpunit": "^0.17.0",
         "vimeo/psalm": "^4.23.0"
     },
