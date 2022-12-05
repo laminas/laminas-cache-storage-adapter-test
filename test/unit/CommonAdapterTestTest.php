@@ -9,6 +9,7 @@ use LaminasTest\Cache\Storage\Adapter\AbstractCommonAdapterTest;
 
 /**
  * @group      Laminas_Cache
+ * @template-extends AbstractCommonAdapterTest<TestAsset\MockAdapter, AdapterOptions>
  */
 final class CommonAdapterTestTest extends AbstractCommonAdapterTest
 {
