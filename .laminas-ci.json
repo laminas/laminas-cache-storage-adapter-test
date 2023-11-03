@@ -1,4 +1,7 @@
 {
     "extensions": ["apcu"],
-    "ini": ["apc.enabled=1", "apc.enable_cli=1"]
+    "ini": ["apc.enabled=1", "apc.enable_cli=1"],
+    "ignore_php_platform_requirements": {
+      "8.3": true
+    }
 }

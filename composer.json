@@ -8,7 +8,7 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0",
         "container-interop/container-interop": "^1.2",
         "laminas/laminas-cache": "^3.1",
         "phpunit/phpunit": "^9.5.20",
@@ -16,11 +16,11 @@
         "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
-        "laminas/laminas-cache-storage-adapter-apcu": "^2.0",
+        "laminas/laminas-cache-storage-adapter-apcu": "^2.2",
         "laminas/laminas-cache-storage-adapter-memory": "^2.0",
         "laminas/laminas-coding-standard": "~2.5.0",
-        "psalm/plugin-phpunit": "^0.18.0",
-        "vimeo/psalm": "^5.0.0"
+        "psalm/plugin-phpunit": "^0.18.4",
+        "vimeo/psalm": "^5.15.0"
     },
     "config": {
         "sort-packages": true,
