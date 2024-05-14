@@ -9,14 +9,14 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-        "laminas/laminas-cache": "^4.0",
+        "laminas/laminas-cache": "^3.12",
         "phpunit/phpunit": "^10.5",
         "psr/cache": "^1.0 || ^2.0 || ^3.0",
         "psr/container": "^2.0",
         "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
-        "laminas/laminas-cache": "4.0.x-dev || ^4.0",
+        "laminas/laminas-cache": "^3.12",
         "laminas/laminas-coding-standard": "~2.5.0",
         "psalm/plugin-phpunit": "^0.19.0",
         "vimeo/psalm": "^5.15.0"
