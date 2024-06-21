@@ -21,6 +21,7 @@ use Laminas\Cache\Storage\StorageInterface;
 use Laminas\Cache\Storage\TaggableInterface;
 use Laminas\Cache\Storage\TotalSpaceCapableInterface;
 use Laminas\Stdlib\ErrorHandler;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -901,6 +902,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertTrue($this->storage->hasItem('test'));
     }
 
+    #[TestDox('Testing the method even tho static-analysis is not allowing empty strings.')]
     public function testClearByPrefixThrowsInvalidArgumentExceptionOnEmptyPrefix(): void
     {
         if (! $this->storage instanceof ClearByPrefixInterface) {
@@ -908,6 +910,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         }
 
         $this->expectException(InvalidArgumentException::class);
+        /** @psalm-suppress InvalidArgument We explicitly want to test this for users not using static analyzers */
         $this->storage->clearByPrefix('');
     }
 
@@ -945,6 +948,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         self::assertFalse($this->storage->hasItem('key2'));
     }
 
+    #[TestDox('Testing the method even tho static-analysis is not allowing empty strings.')]
     public function testClearByNamespaceThrowsInvalidArgumentExceptionOnEmptyNamespace(): void
     {
         if (! $this->storage instanceof ClearByNamespaceInterface) {
@@ -952,6 +956,7 @@ abstract class AbstractCommonAdapterTest extends TestCase
         }
 
         $this->expectException(InvalidArgumentException::class);
+        /** @psalm-suppress InvalidArgument We explicitly want to test this for users not using static analyzers */
         $this->storage->clearByNamespace('');
     }
 
