@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "110ede17bced2330b3bf068bc403b546",
+    "content-hash": "3788877aafd5f9f97c4277358c407b55",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -57,16 +57,16 @@
         },
         {
             "name": "laminas/laminas-cache",
-            "version": "4.0.x-dev",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "afb7c19b39f2ca7733a98004809a76bc9817ce9b"
+                "reference": "6bf742fed94e573842a4195715c7758bd8e11882"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/afb7c19b39f2ca7733a98004809a76bc9817ce9b",
-                "reference": "afb7c19b39f2ca7733a98004809a76bc9817ce9b",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/6bf742fed94e573842a4195715c7758bd8e11882",
+                "reference": "6bf742fed94e573842a4195715c7758bd8e11882",
                 "shasum": ""
             },
             "require": {
@@ -93,8 +93,8 @@
                 "laminas/laminas-config-aggregator": "^1.13",
                 "laminas/laminas-serializer": "^3.0",
                 "phpunit/phpunit": "^9.5.27",
-                "psalm/plugin-phpunit": "^0.18.4",
-                "vimeo/psalm": "^5.4"
+                "psalm/plugin-phpunit": "^0.19.0",
+                "vimeo/psalm": "^5.24"
             },
             "suggest": {
                 "laminas/laminas-cache-storage-adapter-apcu": "APCu implementation",
@@ -108,7 +108,6 @@
                 "laminas/laminas-cli": "The laminas-cli binary can be used to consume commands provided by this component",
                 "laminas/laminas-serializer": "Laminas\\Serializer component"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laminas": {
@@ -147,7 +146,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-06-14T13:55:25+00:00"
+            "time": "2024-06-21T18:42:43+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -3832,16 +3831,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.29.0",
+            "version": "v1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "ef4d7e442ca910c4764bce785146269b30cb5fc4"
+                "reference": "0424dff1c58f028c451efff2045f5d92410bd540"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/ef4d7e442ca910c4764bce785146269b30cb5fc4",
-                "reference": "ef4d7e442ca910c4764bce785146269b30cb5fc4",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/0424dff1c58f028c451efff2045f5d92410bd540",
+                "reference": "0424dff1c58f028c451efff2045f5d92410bd540",
                 "shasum": ""
             },
             "require": {
@@ -3891,7 +3890,7 @@
                 "portable"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.29.0"
+                "source": "https://github.com/symfony/polyfill-ctype/tree/v1.30.0"
             },
             "funding": [
                 {
@@ -3907,7 +3906,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-29T20:11:03+00:00"
+            "time": "2024-05-31T15:07:36+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -4546,9 +4545,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "laminas/laminas-cache": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
