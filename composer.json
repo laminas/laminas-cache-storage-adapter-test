@@ -9,7 +9,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
-        "laminas/laminas-cache": "^4.0",
+        "laminas/laminas-cache": "^4.0.3",
         "phpunit/phpunit": "^10.5",
         "psr/cache": "^2.0 || ^3.0",
         "psr/container": "^2.0",
@@ -17,10 +17,10 @@
     },
     "require-dev": {
         "composer-plugin-api": "^2",
-        "laminas/laminas-cache": "4.0.x-dev || ^4.0",
         "laminas/laminas-coding-standard": "~2.5.0",
         "psalm/plugin-phpunit": "^0.19.0",
-        "vimeo/psalm": "^5.15.0"
+        "vimeo/psalm": "^5.15.0",
+        "webmozart/assert": "^1.11"
     },
     "config": {
         "sort-packages": true,
@@ -45,7 +45,7 @@
             ]
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
         "cs-check": "phpcs",

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Cache\Storage\Adapter;
 
 use Laminas\Cache\Storage\AdapterPluginManager;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -32,8 +33,8 @@ trait PluginManagerDelegatorFactoryTestTrait
 
     /**
      * @psalm-param non-empty-string $commonAdapterName
-     * @dataProvider getCommonAdapterNamesProvider
      */
+    #[DataProvider('getCommonAdapterNamesProvider')]
     public function testAdapterPluginManagerWithCommonNames(string $commonAdapterName): void
     {
         $container = $this->createMock(ContainerInterface::class);
