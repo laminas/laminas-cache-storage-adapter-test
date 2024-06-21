@@ -10,6 +10,7 @@
     findUnusedBaselineEntry="true"
     ignoreInternalFunctionNullReturn="false"
     ignoreInternalFunctionFalseReturn="false"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="src"/>
