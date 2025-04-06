@@ -17,14 +17,15 @@ use LaminasTest\Cache\Storage\Adapter\AbstractCacheItemPoolIntegrationTest;
  */
 final class CacheItemPoolIntegrationTestTest extends AbstractCacheItemPoolIntegrationTest
 {
-    private const MEMORY_ADAPTER_PERSISTENCE = 'Memory adapter does not support deferred save without commit.';
+    private const TRANSIENT_STORAGE = 'Memory cache is not persistent and thus re-instantiating leads to data loss.';
 
     protected function setUp(): void
     {
         parent::setUp();
         /** @psalm-suppress UndefinedClass Memory adapter is not loaded during development. */
         if ($this->createStorage() instanceof Memory) {
-            $this->skippedTests['testDeferredSaveWithoutCommit'] = self::MEMORY_ADAPTER_PERSISTENCE;
+            $this->skippedTests['testDeferredSaveWithoutCommit'] = self::TRANSIENT_STORAGE;
+            $this->skippedTests['testSaveWithoutExpire']         = self::TRANSIENT_STORAGE;
         }
     }
 
