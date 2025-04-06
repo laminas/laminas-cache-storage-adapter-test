@@ -1,8 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="6.10.0@9c0add4eb88d4b169ac04acb7c679918cbb9c252">
+  <file src="src/AbstractAdapterOptionsTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function setUp(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/AbstractCacheItemPoolIntegrationTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function setUp(): void]]></code>
+      <code><![CDATA[protected function tearDown(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/AbstractCommonAdapterTest.php">
+    <InvalidOperand>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[2 * $capabilities->ttlPrecision]]></code>
+      <code><![CDATA[microtime(true) - time()]]></code>
+    </InvalidOperand>
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function tearDown(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/AbstractSimpleCacheIntegrationTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function setUp(): void]]></code>
+      <code><![CDATA[protected function tearDown(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/ModifiableClock.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function now(): DateTimeImmutable]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/NoopAdapterTestAsset.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function internalGetItem(string $normalizedKey, ?bool &$success = null, mixed &$casToken = null): mixed]]></code>
+      <code><![CDATA[protected function internalRemoveItem(string $normalizedKey): bool]]></code>
+      <code><![CDATA[protected function internalSetItem(string $normalizedKey, mixed $value): bool]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="test/integration/AdapterForIntegrationTestDetector.php">
+    <UnusedPsalmSuppress>
+      <code><![CDATA[MixedInferredReturnType]]></code>
+    </UnusedPsalmSuppress>
+  </file>
   <file src="test/integration/AdapterPluginManagerDelegatorFactoryTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function getDelegatorFactory(): callable]]></code>
+      <code><![CDATA[public static function getCommonAdapterNamesProvider(): iterable]]></code>
+    </MissingOverrideAttribute>
     <PossiblyUnusedMethod>
       <code><![CDATA[getCommonAdapterNamesProvider]]></code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="test/integration/CacheItemPoolIntegrationTestTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function createStorage(): StorageInterface&FlushableInterface]]></code>
+      <code><![CDATA[protected function setUp(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="test/integration/LaminasComponentInstallerIntegrationTestTraitTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function setUp(): void]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="test/integration/SimpleCacheIntegrationTestTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function createStorage(): StorageInterface]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="test/unit/CommonAdapterTestTest.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected function setUp(): void]]></code>
+      <code><![CDATA[public function testCanStoreValuesWithCacheKeysUpToTheMaximumKeyLengthLimit(): void]]></code>
+    </MissingOverrideAttribute>
   </file>
 </files>
