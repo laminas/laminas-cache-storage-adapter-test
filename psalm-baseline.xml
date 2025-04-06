@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="6.10.0@9c0add4eb88d4b169ac04acb7c679918cbb9c252">
+  <file src="src/AbstractCommonAdapterTest.php">
+    <InvalidOperand>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[$ttl + $capabilities->ttlPrecision * 2]]></code>
+      <code><![CDATA[2 * $capabilities->ttlPrecision]]></code>
+      <code><![CDATA[microtime(true) - time()]]></code>
+    </InvalidOperand>
+  </file>
+  <file src="test/integration/AdapterForIntegrationTestDetector.php">
+    <UnusedPsalmSuppress>
+      <code><![CDATA[MixedInferredReturnType]]></code>
+    </UnusedPsalmSuppress>
+  </file>
   <file src="test/integration/AdapterPluginManagerDelegatorFactoryTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[getCommonAdapterNamesProvider]]></code>

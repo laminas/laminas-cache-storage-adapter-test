@@ -6,6 +6,14 @@
         colors="true"
         defaultTestSuite="Laminas Cache Tests"
         cacheDirectory=".phpunit.cache"
+        failOnDeprecation="true"
+        failOnNotice="true"
+        failOnWarning="true"
+        failOnPhpunitDeprecation="true"
+        displayDetailsOnPhpunitDeprecations="true"
+        displayDetailsOnTestsThatTriggerDeprecations="true"
+        displayDetailsOnTestsThatTriggerNotices="true"
+        displayDetailsOnTestsThatTriggerWarnings="true"
 >
   <testsuites>
     <testsuite name="Laminas Cache Tests">
