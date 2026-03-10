@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e10dfd3c026c622ef6a212e2893875b0",
+    "content-hash": "a2da5de576ae861580202a817c8a21e3",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -57,16 +57,16 @@
         },
         {
             "name": "laminas/laminas-cache",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "c5f21925cf20e717c31d1036bcb7d0f4b8699762"
+                "reference": "bc1b83593b49236deaac4577b09e3f9be737a79e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/c5f21925cf20e717c31d1036bcb7d0f4b8699762",
-                "reference": "c5f21925cf20e717c31d1036bcb7d0f4b8699762",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/bc1b83593b49236deaac4577b09e3f9be737a79e",
+                "reference": "bc1b83593b49236deaac4577b09e3f9be737a79e",
                 "shasum": ""
             },
             "require": {
@@ -77,7 +77,7 @@
                 "psr/cache": "^2.0 || ^3.0",
                 "psr/clock": "^1.0",
                 "psr/simple-cache": "^2.0 || ^3.0",
-                "webmozart/assert": "^1.11"
+                "webmozart/assert": "^1.11 || ^2.1.6"
             },
             "conflict": {
                 "laminas/laminas-serializer": "<3.0",
@@ -88,13 +88,13 @@
                 "psr/simple-cache-implementation": "1.0"
             },
             "require-dev": {
-                "laminas/laminas-cli": "^1.11",
+                "laminas/laminas-cli": "^1.15",
                 "laminas/laminas-coding-standard": "~3.1.0",
-                "laminas/laminas-config-aggregator": "^1.17",
+                "laminas/laminas-config-aggregator": "^1.19",
                 "laminas/laminas-serializer": "^3.2",
-                "phpunit/phpunit": "^11.5.37",
-                "psalm/plugin-phpunit": "^0.19.0",
-                "vimeo/psalm": "^6"
+                "phpunit/phpunit": "^11.5.55",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.15.1"
             },
             "suggest": {
                 "laminas/laminas-cache-storage-adapter-apcu": "APCu implementation",
@@ -146,7 +146,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2026-02-04T23:05:51+00:00"
+            "time": "2026-03-10T15:05:19+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
@@ -2235,23 +2235,23 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.12.1",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68"
+                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9be6926d8b485f55b9229203f962b51ed377ba68",
-                "reference": "9be6926d8b485f55b9229203f962b51ed377ba68",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
+                "reference": "ff31ad6efc62e66e518fbab1cde3453d389bcdc8",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
                 "ext-date": "*",
                 "ext-filter": "*",
-                "php": "^7.2 || ^8.0"
+                "php": "^8.2"
             },
             "suggest": {
                 "ext-intl": "",
@@ -2261,7 +2261,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.10-dev"
+                    "dev-feature/2-0": "2.0-dev"
                 }
             },
             "autoload": {
@@ -2277,6 +2277,10 @@
                 {
                     "name": "Bernhard Schussek",
                     "email": "bschussek@gmail.com"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com"
                 }
             ],
             "description": "Assertions to validate method input/output with nice error messages.",
@@ -2287,9 +2291,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/1.12.1"
+                "source": "https://github.com/webmozarts/assert/tree/2.1.6"
             },
-            "time": "2025-10-29T15:56:20+00:00"
+            "time": "2026-02-27T10:28:38+00:00"
         }
     ],
     "packages-dev": [
