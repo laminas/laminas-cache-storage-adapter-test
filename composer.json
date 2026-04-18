@@ -16,7 +16,7 @@
     "require": {
         "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
         "laminas/laminas-cache": "^4.2.0",
-        "phpunit/phpunit": "^10.5.63",
+        "phpunit/phpunit": "^12.5.22",
         "psr/cache": "^2.0 || ^3.0",
         "psr/clock": "^1.0",
         "psr/container": "^2.0",
